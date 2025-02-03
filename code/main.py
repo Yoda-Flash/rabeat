@@ -1,3 +1,5 @@
+from random import randint
+
 import displayio
 from blinka_displayio_pygamedisplay import PyGameDisplay
 import pygame
@@ -92,6 +94,176 @@ hard_sprite = displayio.TileGrid(
     hard,
     pixel_shader=hard_palette
 )
+
+# Scoreboard inits
+scoreboard, scoreboard_palette = adafruit_imageload.load(
+    "./art/in_game_scores/scoreboard.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+scoreboard_palette.make_transparent(0)
+scoreboard_sprite = displayio.TileGrid(
+    scoreboard,
+    pixel_shader=scoreboard_palette
+)
+
+in_game_score_sprites = []
+
+in_game_score0, in_game_score0_palette = adafruit_imageload.load(
+    "./art/in_game_scores/0.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+in_game_score0_palette.make_transparent(0)
+in_game_score0_sprite = displayio.TileGrid(
+    in_game_score0,
+    pixel_shader=in_game_score0_palette
+)
+in_game_score_sprites.append(in_game_score0_sprite)
+
+in_game_score1, in_game_score1_palette = adafruit_imageload.load(
+    "./art/in_game_scores/1.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+in_game_score1_palette.make_transparent(0)
+in_game_score1_sprite = displayio.TileGrid(
+    in_game_score1,
+    pixel_shader=in_game_score1_palette
+)
+in_game_score_sprites.append(in_game_score1_sprite)
+
+in_game_score2, in_game_score2_palette = adafruit_imageload.load(
+    "./art/in_game_scores/2.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+in_game_score2_palette.make_transparent(0)
+in_game_score2_sprite = displayio.TileGrid(
+    in_game_score2,
+    pixel_shader=in_game_score2_palette
+)
+in_game_score_sprites.append(in_game_score2_sprite)
+
+in_game_score3, in_game_score3_palette = adafruit_imageload.load(
+    "./art/in_game_scores/3.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+in_game_score3_palette.make_transparent(0)
+in_game_score3_sprite = displayio.TileGrid(
+    in_game_score3,
+    pixel_shader=in_game_score3_palette
+)
+in_game_score_sprites.append(in_game_score3_sprite)
+
+in_game_score4, in_game_score4_palette = adafruit_imageload.load(
+    "./art/in_game_scores/4.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+in_game_score4_palette.make_transparent(0)
+in_game_score4_sprite = displayio.TileGrid(
+    in_game_score4,
+    pixel_shader=in_game_score4_palette
+)
+in_game_score_sprites.append(in_game_score4_sprite)
+
+in_game_score5, in_game_score5_palette = adafruit_imageload.load(
+    "./art/in_game_scores/5.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+in_game_score5_palette.make_transparent(0)
+in_game_score5_sprite = displayio.TileGrid(
+    in_game_score5,
+    pixel_shader=in_game_score5_palette
+)
+in_game_score_sprites.append(in_game_score5_sprite)
+
+in_game_score6, in_game_score6_palette = adafruit_imageload.load(
+    "./art/in_game_scores/6.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+in_game_score6_palette.make_transparent(0)
+in_game_score6_sprite = displayio.TileGrid(
+    in_game_score6,
+    pixel_shader=in_game_score6_palette
+)
+in_game_score_sprites.append(in_game_score6_sprite)
+
+in_game_score7, in_game_score7_palette = adafruit_imageload.load(
+    "./art/in_game_scores/7.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+in_game_score7_palette.make_transparent(0)
+in_game_score7_sprite = displayio.TileGrid(
+    in_game_score7,
+    pixel_shader=in_game_score7_palette
+)
+in_game_score_sprites.append(in_game_score7_sprite)
+
+in_game_score8, in_game_score8_palette = adafruit_imageload.load(
+    "./art/in_game_scores/8.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+in_game_score8_palette.make_transparent(0)
+in_game_score8_sprite = displayio.TileGrid(
+    in_game_score8,
+    pixel_shader=in_game_score8_palette
+)
+in_game_score_sprites.append(in_game_score8_sprite)
+
+in_game_score9, in_game_score9_palette = adafruit_imageload.load(
+    "./art/in_game_scores/9.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+in_game_score9_palette.make_transparent(0)
+in_game_score9_sprite = displayio.TileGrid(
+    in_game_score9,
+    pixel_shader=in_game_score9_palette
+)
+in_game_score_sprites.append(in_game_score9_sprite)
+
+in_game_score10, in_game_score10_palette = adafruit_imageload.load(
+    "./art/in_game_scores/10.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+in_game_score10_palette.make_transparent(0)
+in_game_score10_sprite = displayio.TileGrid(
+    in_game_score10,
+    pixel_shader=in_game_score10_palette
+)
+in_game_score_sprites.append(in_game_score10_sprite)
+
+in_game_score11, in_game_score11_palette = adafruit_imageload.load(
+    "./art/in_game_scores/11.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+in_game_score11_palette.make_transparent(0)
+in_game_score11_sprite = displayio.TileGrid(
+    in_game_score11,
+    pixel_shader=in_game_score11_palette
+)
+in_game_score_sprites.append(in_game_score11_sprite)
+
+in_game_score12, in_game_score12_palette = adafruit_imageload.load(
+    "./art/in_game_scores/12.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+in_game_score12_palette.make_transparent(0)
+in_game_score12_sprite = displayio.TileGrid(
+    in_game_score12,
+    pixel_shader=in_game_score12_palette
+)
+in_game_score_sprites.append(in_game_score12_sprite)
 
 # User rabbit inits
 user_rabbits_left = []
@@ -381,13 +553,389 @@ model_rabbit_right4_sprite = displayio.TileGrid(
 )
 model_rabbits_right.append(model_rabbit_right4_sprite)
 
+stage_complete_bg = displayio.OnDiskBitmap("./art/stage_complete.bmp")
+stage_complete_bg_sprite = displayio.TileGrid(
+    stage_complete_bg,
+    pixel_shader=stage_complete_bg.pixel_shader
+)
+
+endgame_options, endgame_options_palette = adafruit_imageload.load(
+    "./art/menu/endgame/options.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+endgame_options_palette.make_transparent(0)
+endgame_options_sprite = displayio.TileGrid(
+    endgame_options,
+    pixel_shader=endgame_options_palette
+)
+
+endgame_quit, endgame_quit_palette = adafruit_imageload.load(
+    "./art/menu/endgame/quit.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+endgame_quit_palette.make_transparent(0)
+endgame_quit_sprite = displayio.TileGrid(
+    endgame_quit,
+    pixel_shader=endgame_quit_palette
+)
+
+endgame_restart, endgame_restart_palette = adafruit_imageload.load(
+    "./art/menu/endgame/restart.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+endgame_restart_palette.make_transparent(0)
+endgame_restart_sprite = displayio.TileGrid(
+    endgame_restart,
+    pixel_shader=endgame_restart_palette
+)
+
+end_game_score_sprites = []
+
+end_game_score0, end_game_score0_palette = adafruit_imageload.load(
+    "./art/end_game_scores/0.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+end_game_score0_palette.make_transparent(0)
+end_game_score0_sprite = displayio.TileGrid(
+    end_game_score0,
+    pixel_shader=end_game_score0_palette
+)
+end_game_score_sprites.append(end_game_score0_sprite)
+
+end_game_score1, end_game_score1_palette = adafruit_imageload.load(
+    "./art/end_game_scores/1.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+end_game_score1_palette.make_transparent(0)
+end_game_score1_sprite = displayio.TileGrid(
+    end_game_score1,
+    pixel_shader=end_game_score1_palette
+)
+end_game_score_sprites.append(end_game_score1_sprite)
+
+end_game_score2, end_game_score2_palette = adafruit_imageload.load(
+    "./art/end_game_scores/2.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+end_game_score2_palette.make_transparent(0)
+end_game_score2_sprite = displayio.TileGrid(
+    end_game_score2,
+    pixel_shader=end_game_score2_palette
+)
+end_game_score_sprites.append(end_game_score2_sprite)
+
+end_game_score3, end_game_score3_palette = adafruit_imageload.load(
+    "./art/end_game_scores/3.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+end_game_score3_palette.make_transparent(0)
+end_game_score3_sprite = displayio.TileGrid(
+    end_game_score3,
+    pixel_shader=end_game_score3_palette
+)
+end_game_score_sprites.append(end_game_score3_sprite)
+
+end_game_score4, end_game_score4_palette = adafruit_imageload.load(
+    "./art/end_game_scores/4.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+end_game_score4_palette.make_transparent(0)
+end_game_score4_sprite = displayio.TileGrid(
+    end_game_score4,
+    pixel_shader=end_game_score4_palette
+)
+end_game_score_sprites.append(end_game_score4_sprite)
+
+end_game_score5, end_game_score5_palette = adafruit_imageload.load(
+    "./art/end_game_scores/5.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+end_game_score5_palette.make_transparent(0)
+end_game_score5_sprite = displayio.TileGrid(
+    end_game_score5,
+    pixel_shader=end_game_score5_palette
+)
+end_game_score_sprites.append(end_game_score5_sprite)
+
+end_game_score6, end_game_score6_palette = adafruit_imageload.load(
+    "./art/end_game_scores/6.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+end_game_score6_palette.make_transparent(0)
+end_game_score6_sprite = displayio.TileGrid(
+    end_game_score6,
+    pixel_shader=end_game_score6_palette
+)
+end_game_score_sprites.append(end_game_score6_sprite)
+
+end_game_score7, end_game_score7_palette = adafruit_imageload.load(
+    "./art/end_game_scores/7.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+end_game_score7_palette.make_transparent(0)
+end_game_score7_sprite = displayio.TileGrid(
+    end_game_score7,
+    pixel_shader=end_game_score7_palette
+)
+end_game_score_sprites.append(end_game_score7_sprite)
+
+end_game_score8, end_game_score8_palette = adafruit_imageload.load(
+    "./art/end_game_scores/8.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+end_game_score8_palette.make_transparent(0)
+end_game_score8_sprite = displayio.TileGrid(
+    end_game_score8,
+    pixel_shader=end_game_score8_palette
+)
+end_game_score_sprites.append(end_game_score8_sprite)
+
+end_game_score9, end_game_score9_palette = adafruit_imageload.load(
+    "./art/end_game_scores/9.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+end_game_score9_palette.make_transparent(0)
+end_game_score9_sprite = displayio.TileGrid(
+    end_game_score9,
+    pixel_shader=end_game_score9_palette
+)
+end_game_score_sprites.append(end_game_score9_sprite)
+
+end_game_score10, end_game_score10_palette = adafruit_imageload.load(
+    "./art/end_game_scores/10.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+end_game_score10_palette.make_transparent(0)
+end_game_score10_sprite = displayio.TileGrid(
+    end_game_score10,
+    pixel_shader=end_game_score10_palette
+)
+end_game_score_sprites.append(end_game_score10_sprite)
+
+end_game_score11, end_game_score11_palette = adafruit_imageload.load(
+    "./art/end_game_scores/11.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+end_game_score11_palette.make_transparent(0)
+end_game_score11_sprite = displayio.TileGrid(
+    end_game_score11,
+    pixel_shader=end_game_score11_palette
+)
+end_game_score_sprites.append(end_game_score11_sprite)
+
+end_game_score12, end_game_score12_palette = adafruit_imageload.load(
+    "./art/end_game_scores/12.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+end_game_score12_palette.make_transparent(0)
+end_game_score12_sprite = displayio.TileGrid(
+    end_game_score12,
+    pixel_shader=end_game_score12_palette
+)
+end_game_score_sprites.append(end_game_score12_sprite)
+
+miss, miss_palette = adafruit_imageload.load(
+    "./art/words/miss.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+miss_palette.make_transparent(0)
+miss_sprite = displayio.TileGrid(
+    miss,
+    pixel_shader=miss_palette
+)
+
+good, good_palette = adafruit_imageload.load(
+    "./art/words/good.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+good_palette.make_transparent(0)
+good_sprite = displayio.TileGrid(
+    good,
+    pixel_shader=good_palette
+)
+
+great, great_palette = adafruit_imageload.load(
+    "./art/words/great.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+great_palette.make_transparent(0)
+great_sprite = displayio.TileGrid(
+    great,
+    pixel_shader=great_palette
+)
+
+perfect, perfect_palette = adafruit_imageload.load(
+    "./art/words/perfect.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+perfect_palette.make_transparent(0)
+perfect_sprite = displayio.TileGrid(
+    perfect,
+    pixel_shader=perfect_palette
+)
+
+# Menu setup
+menu = displayio.OnDiskBitmap("./art/menu/menu.bmp")
+menu_sprite = displayio.TileGrid(
+    menu,
+    pixel_shader=menu.pixel_shader
+)
+
+options, options_palette = adafruit_imageload.load(
+    "./art/menu/options.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+options_palette.make_transparent(0)
+options_sprite = displayio.TileGrid(
+    options,
+    pixel_shader=options_palette
+)
+
+back_to_game, back_to_game_palette = adafruit_imageload.load(
+    "./art/menu/back_to_game.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+back_to_game_palette.make_transparent(0)
+back_to_game_sprite = displayio.TileGrid(
+    back_to_game,
+    pixel_shader=back_to_game_palette
+)
+
+restart, restart_palette = adafruit_imageload.load(
+    "./art/menu/restart.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+restart_palette.make_transparent(0)
+restart_sprite = displayio.TileGrid(
+    restart,
+    pixel_shader=restart_palette
+)
+
+how_to_play, how_to_play_palette = adafruit_imageload.load(
+    "./art/menu/how_to_play.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+how_to_play_palette.make_transparent(0)
+how_to_play_sprite = displayio.TileGrid(
+    how_to_play,
+    pixel_shader=how_to_play_palette
+)
+
+difficulty, difficulty_palette = adafruit_imageload.load(
+    "./art/menu/difficulty.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+difficulty_palette.make_transparent(0)
+difficulty_sprite = displayio.TileGrid(
+    difficulty,
+    pixel_shader=difficulty_palette
+)
+
+menu_quit, menu_quit_palette = adafruit_imageload.load(
+    "./art/menu/quit.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+menu_quit_palette.make_transparent(0)
+menu_quit_sprite = displayio.TileGrid(
+    menu_quit,
+    pixel_shader=menu_quit_palette
+)
+
 # Screen settings
 set_home_screen = True
 set_difficulty_screen = False
 set_menu_screen = False
 set_game_screen = False
 set_stage_complete_screen = False
+set_how_to_play_screen = False
 level = "easy"
+
+# Music settings
+music_loaded = False
+song_pos = 0
+song_bpm = 120
+song_pos_offset = 0
+
+# Pose indexes
+model_neutral_pose_index = [22, 23]
+model_left_pose_index = [14, 15, 16, 17]
+model_right_pose_index = [18, 19, 20, 21]
+user_neutral_pose_index = [12, 13]
+user_left_pose_index = [4, 5, 6, 7]
+user_right_pose_index = [8, 9, 10, 11]
+random_pose_index = 0
+random_pose_index_timer = 0
+
+# Score settings
+rating_on = False
+rating_on_timer = 0
+num_song_timestamps = 0
+current_score = 0
+percentage_score = 0
+perfects = 0
+greats = 0
+goods = 0
+misses = 0
+
+endgame_option = "restart"
+menu_option = "back_to_game"
+
+# Posing timestamps for songs
+model_level_neutral = []
+model_level_left = []
+model_level_right = []
+model_level_random = []
+
+user_level_neutral = []
+user_level_left = []
+user_level_right = []
+user_level_random = []
+
+model_easy_take_a_stab_neutral = [12000, 21000, 33000]
+model_easy_take_a_stab_left = [4000, 16000, 19000, 25000, 37000]
+model_easy_take_a_stab_right = [8000, 27000, 35000]
+model_easy_take_a_stab_random = [23000, 29000, 31000]
+
+user_easy_take_a_stab_neutral = [14000, 22000, 34000]
+user_easy_take_a_stab_left = [6000, 18000, 20000, 26000, 38000]
+user_easy_take_a_stab_right = [10000, 28000, 36000]
+user_easy_take_a_stab_random = [24000, 30000, 32000]
+
+model_normal_copycat_curry_neutral = [12000, 21000, 33000]
+model_normal_copycat_curry_left = [4000, 16000, 19000, 25000, 37000]
+model_normal_copycat_curry_right = [8000, 27000, 35000]
+model_normal_copycat_curry_random = [23000, 29000, 31000]
+
+user_normal_copycat_curry_neutral = [14000, 22000, 34000]
+user_normal_copycat_curry_left = [6000, 18000, 20000, 26000, 38000]
+user_normal_copycat_curry_right = [10000, 28000, 36000]
+user_normal_copycat_curry_random = [24000, 30000, 32000]
 
 home_screen = displayio.Group()
 home_screen.append(home_bg_sprite)
@@ -409,8 +957,75 @@ game_screen = displayio.Group()
 game_screen.append(bg_sprite)
 game_screen.append(user_rabbit_sprite)
 game_screen.append(model_rabbit_sprite)
+game_screen.append(scoreboard_sprite)
+for rabbit in user_rabbits_left:
+    game_screen.append(rabbit)
+    game_screen[-1].hidden = True
+for rabbit in user_rabbits_right:
+    game_screen.append(rabbit)
+    game_screen[-1].hidden = True
+game_screen.append(user_rabbit_back_sprite)
+game_screen[-1].hidden = True
+game_screen.append(user_rabbit_duck_sprite)
+game_screen[-1].hidden = True
+for rabbit in model_rabbits_left:
+    game_screen.append(rabbit)
+    game_screen[-1].hidden = True
+for rabbit in model_rabbits_right:
+    game_screen.append(rabbit)
+    game_screen[-1].hidden = True
+game_screen.append(model_rabbit_back_sprite)
+game_screen[-1].hidden = True
+game_screen.append(model_rabbit_duck_sprite)
+game_screen[-1].hidden = True
 
-def difficulty(level_difficulty):
+game_screen.append(user_rabbit_bob_sprite)
+game_screen[-1].hidden = True
+game_screen.append(model_rabbit_bob_sprite)
+game_screen[-1].hidden = True
+
+game_screen.append(miss_sprite)
+game_screen[-1].hidden = True
+game_screen.append(good_sprite)
+game_screen[-1].hidden = True
+game_screen.append(great_sprite)
+game_screen[-1].hidden = True
+game_screen.append(perfect_sprite)
+game_screen[-1].hidden = True
+
+for score in in_game_score_sprites:
+    game_screen.append(score)
+    game_screen[-1].hidden = True
+game_screen[-13 + current_score].hidden = False
+
+stage_complete_screen = displayio.Group()
+stage_complete_screen.append(stage_complete_bg_sprite)
+stage_complete_screen.append(user_rabbit_sprite)
+stage_complete_screen.append(endgame_options_sprite)
+stage_complete_screen.append(endgame_restart_sprite)
+stage_complete_screen[-1].hidden = False
+stage_complete_screen.append(endgame_quit_sprite)
+stage_complete_screen[-1].hidden = True
+
+for score in end_game_score_sprites:
+    stage_complete_screen.append(score)
+    stage_complete_screen[-1].hidden = True
+
+menu_screen = displayio.Group()
+menu_screen.append(menu_sprite)
+menu_screen.append(options_sprite)
+menu_screen.append(back_to_game_sprite)
+menu_screen.append(restart_sprite)
+menu_screen[-1].hidden = True
+menu_screen.append(how_to_play_sprite)
+menu_screen[-1].hidden = True
+menu_screen.append(difficulty_sprite)
+menu_screen[-1].hidden = True
+menu_screen.append(menu_quit_sprite)
+menu_screen[-1].hidden = True
+
+
+def change_difficulty(level_difficulty):
     if level_difficulty == "easy":
         difficulty_screen[3].hidden = True
         difficulty_screen[4].hidden = False
@@ -423,8 +1038,178 @@ def difficulty(level_difficulty):
         difficulty_screen[5].hidden = True
         difficulty_screen[3].hidden = False
         level_difficulty = "easy"
-    time.sleep(0.1)
+    time.sleep(0.15)
     return level_difficulty
+
+def change_menu_option(option):
+    if option == "back_to_game":
+        menu_screen[2].hidden = True
+        menu_screen[3].hidden = False
+        option = "restart"
+    elif option == "restart":
+        menu_screen[3].hidden = True
+        menu_screen[4].hidden = False
+        option = "how_to_play"
+    elif option == "how_to_play":
+        menu_screen[4].hidden = True
+        menu_screen[5].hidden = False
+        option = "difficulty"
+    elif option == "difficulty":
+        menu_screen[5].hidden = True
+        menu_screen[6].hidden = False
+        option = "quit"
+    elif option == "quit":
+        menu_screen[6].hidden = True
+        menu_screen[2].hidden = False
+        option = "back_to_game"
+    time.sleep(0.15)
+    return option
+
+def change_endgame_option(option):
+    if option == "restart":
+        stage_complete_screen[3].hidden = True
+        stage_complete_screen[4].hidden = False
+        option = "quit"
+    elif option == "quit":
+        stage_complete_screen[4].hidden = True
+        stage_complete_screen[3].hidden = False
+        option = "restart"
+    time.sleep(0.15)
+    return option
+
+def set_poses(level_difficulty):
+    global model_level_left, model_level_right, model_level_neutral, model_level_random, user_level_left, user_level_right, user_level_neutral, user_level_random
+    if level_difficulty == "easy":
+        model_level_left = model_easy_take_a_stab_left
+        model_level_right = model_easy_take_a_stab_right
+        model_level_neutral = model_easy_take_a_stab_neutral
+        model_level_random = model_easy_take_a_stab_random
+        user_level_left = user_easy_take_a_stab_left
+        user_level_right = user_easy_take_a_stab_right
+        user_level_neutral = user_easy_take_a_stab_neutral
+        user_level_random = user_easy_take_a_stab_random
+    if level_difficulty == "normal":
+        model_level_left = model_normal_copycat_curry_left
+        model_level_right = model_normal_copycat_curry_right
+        model_level_neutral = model_normal_copycat_curry_neutral
+        model_level_random = model_normal_copycat_curry_random
+        user_level_left = user_normal_copycat_curry_left
+        user_level_right = user_normal_copycat_curry_right
+        user_level_neutral = user_normal_copycat_curry_neutral
+        user_level_random = user_normal_copycat_curry_random
+
+
+def distribute_randoms():
+    index = 0
+    for timestamp in model_level_random:
+        direction = randint(0, 1)
+        if direction == 0:
+            model_level_left.append(timestamp)
+            user_level_left.append(user_level_random[index])
+        elif direction == 1:
+            model_level_right.append(timestamp)
+            user_level_right.append(user_level_random[index])
+        index += 1
+
+def set_timestamp_number():
+    global num_song_timestamps
+    num_song_timestamps = len(model_level_left) + len(model_level_right) + len(model_level_neutral)
+
+def load_music(level_difficulty, offset):
+    if level_difficulty == "easy":
+        pygame.mixer.music.load("./music/take_a_stab.mp3")
+        offset = 100
+    elif level_difficulty == "normal":
+        pygame.mixer.music.load("./music/copycat_curry.mp3")
+        offset = 100
+    elif level_difficulty == "hard":
+        pygame.mixer.music.load("./music/time_to_shine.mp3")
+        offset = 220
+    return True, offset
+
+def change_score(rating):
+    global current_score, percentage_score, perfects, greats, goods, misses, rating_on
+    rating_on = True
+    if rating == "perfect":
+        perfects += (1/num_song_timestamps)
+        percentage_score += (1/num_song_timestamps)
+        game_screen[29].hidden = False
+    elif rating == "great":
+        greats += (1/num_song_timestamps)
+        percentage_score += (0.75/num_song_timestamps)
+        game_screen[28].hidden = False
+    elif rating == "good":
+        goods += (1/num_song_timestamps)
+        percentage_score += (0.25/num_song_timestamps)
+        game_screen[27].hidden = False
+    elif rating == "miss":
+        misses += (1/num_song_timestamps)
+        game_screen[26].hidden = False
+
+    if percentage_score == 1:
+        current_score = 12
+    elif percentage_score >= 0.98:
+        current_score = 11
+    elif percentage_score >= 0.95:
+        current_score = 10
+    elif percentage_score >= 0.90:
+        current_score = 9
+    elif percentage_score >= 0.75:
+        current_score = 8
+    elif percentage_score >= 0.5:
+        current_score = 7
+    elif percentage_score >= 0.25:
+        current_score = 6
+    elif percentage_score >= 0.20:
+        current_score = 5
+    elif percentage_score >= 0.15:
+        current_score = 4
+    elif percentage_score >= 0.10:
+        current_score = 3
+    elif percentage_score >= 0.05:
+        current_score = 2
+    elif percentage_score >= 0.01:
+        current_score = 1
+    elif percentage_score == 0:
+        current_score = 0
+
+    # if perfects == 0 and greats == 0 and goods == 0:
+    #     current_score = 0
+    # elif perfects <= 0.25 or greats <= 0.25 and goods <= 0.25:
+    #     current_score = 1
+    # elif perfects <= 0.5 and misses > goods > greats:
+    #     current_score = 2
+    # elif perfects <= 0.5 and misses > greats > goods:
+    #     current_score = 3
+    # elif perfects <= 0.5 and goods > greats > misses:
+    #     current_score = 4
+    # elif perfects <= 0.5 and greats > goods > misses:
+    #     current_score = 5
+    # elif perfects <= 0.5 and misses > 0:
+    #     current_score = 6
+    # elif perfects <= 0.5 and greats <= 1 and goods <= 1 and misses == 0:
+    #     current_score = 7
+    # elif perfects <= 0.75 and misses > 0:
+    #     current_score = 8
+    # elif (perfects <= 0.75 and misses == 0) or (perfects <= 0.9 and (greats > 0 or goods > 0 or misses > 0)):
+    #     current_score = 9
+    # elif (perfects <= 0.9 and misses == 0) or (perfects <= 1 and (greats > 0 or goods > 0 or misses > 0)):
+    #     current_score = 10
+    # elif perfects <= 1 and misses == 0:
+    #     current_score = 11
+    # elif perfects == 1:
+    #     current_score = 12
+
+def restart():
+    global current_score, percentage_score, perfects, greats, goods, misses, music_loaded
+    current_score = 0
+    percentage_score = 0
+    perfects = 0
+    greats = 0
+    goods = 0
+    misses = 0
+    music_loaded = False
+
 
 # Game loop and controls
 while True:
@@ -444,13 +1229,189 @@ while True:
                 set_home_screen = False
                 time.sleep(0.2)
     elif set_difficulty_screen:
+        restart()
         display.show(difficulty_screen)
-        if keys[pygame.K_SPACE]:
-            level = difficulty(level)
+        time.sleep(0.05)
+        if keys[pygame.K_SPACE] or keys[pygame.K_UP] or keys[pygame.K_2]:
+            level = change_difficulty(level)
+        if keys[pygame.K_RETURN] or keys[pygame.K_RIGHT] or keys[pygame.K_3]:
+            set_difficulty_screen = False
+            set_game_screen = True
+            set_poses(level)
+            distribute_randoms()
+            set_timestamp_number()
+            time.sleep(0.5)
     elif set_game_screen:
         display.show(game_screen)
+        if (keys[pygame.K_LEFT] and (keys[pygame.K_RIGHT] or keys[pygame.K_UP])) or (keys[pygame.K_UP] and keys[pygame.K_RIGHT]) or (keys[pygame.K_1] and (keys[pygame.K_2] or keys[pygame.K_3])) or (keys[pygame.K_2] and keys[pygame.K_3]):
+            set_menu_screen = True
+            set_game_screen = False
+            time.sleep(0.2)
+        if not music_loaded:
+            music_loaded, song_pos_offset = load_music(level, song_pos_offset)
+            pygame.mixer.music.play(loops=0)
+        song_pos = pygame.mixer.music.get_pos() - song_pos_offset
+        if any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) <= 500) for timestamp in model_level_left):
+            if random_pose_index_timer == 0:
+                random_pose_index = randint(0, 3)
+                random_pose_index_timer += 1
+            game_screen[model_left_pose_index[random_pose_index]].hidden = False
+            game_screen[2].hidden = True
+            if song_pos % 500 <= 50:
+                if not rating_on:
+                    game_screen[24].hidden = False
+                game_screen[1].hidden = True
+        elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) <= 500) for timestamp in model_level_right):
+            if random_pose_index_timer == 0:
+                random_pose_index = randint(0, 3)
+                random_pose_index_timer += 1
+            game_screen[model_right_pose_index[random_pose_index]].hidden = False
+            game_screen[2].hidden = True
+            if song_pos % 500 <= 50:
+                if not rating_on:
+                    game_screen[24].hidden = False
+                game_screen[1].hidden = True
+        elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) <= 500) for timestamp in model_level_neutral):
+            if random_pose_index_timer == 0:
+                random_pose_index = randint(0, 3)
+                random_pose_index_timer += 1
+            game_screen[model_neutral_pose_index[int(random_pose_index/2)]].hidden = False
+            game_screen[2].hidden = True
+            if song_pos % 500 <= 50:
+                if not rating_on:
+                    game_screen[24].hidden = False
+                game_screen[1].hidden = True
+        elif song_pos % 500 <= 50:
+            game_screen[25].hidden = False
+            game_screen[2].hidden = True
+            if not rating_on:
+                game_screen[24].hidden = False
+            game_screen[1].hidden = True
+        else:
+            if not rating_on:
+                game_screen[1].hidden = False
+            game_screen[24].hidden = True
+            game_screen[2].hidden = False
+            game_screen[25].hidden = True
+            game_screen[model_left_pose_index[random_pose_index]].hidden = True
+            game_screen[model_right_pose_index[random_pose_index]].hidden = True
+            game_screen[model_neutral_pose_index[int(random_pose_index / 2)]].hidden = True
+        if not rating_on:
+            if keys[pygame.K_UP] or keys[pygame.K_2]:
+                if any(abs(song_pos - timestamp) <= 150 for timestamp in user_level_neutral):
+                    change_score("perfect")
+                elif any(abs(song_pos - timestamp) <= 200 for timestamp in user_level_neutral):
+                    change_score("great")
+                elif any(abs(song_pos - timestamp) <= 300 for timestamp in user_level_neutral):
+                    change_score("good")
+                else:
+                    change_score("miss")
+                if current_score != 0:
+                    game_screen[-13 + current_score].hidden = True
+                    game_screen[-13 + current_score].hidden = False
+                game_screen[user_neutral_pose_index[int(random_pose_index / 2)]].hidden = False
+                game_screen[1].hidden = True
+                game_screen[24].hidden = True
+            elif keys[pygame.K_LEFT] or keys[pygame.K_1]:
+                if any(abs(song_pos - timestamp) <= 150 for timestamp in user_level_left):
+                    change_score("perfect")
+                elif any(abs(song_pos - timestamp) <= 200 for timestamp in user_level_left):
+                    change_score("great")
+                elif any(abs(song_pos - timestamp) <= 300 for timestamp in user_level_left):
+                    change_score("good")
+                else:
+                    change_score("miss")
+                if current_score != 0:
+                    game_screen[-13 + current_score].hidden = True
+                    game_screen[-13 + current_score].hidden = False
+                game_screen[user_left_pose_index[random_pose_index]].hidden = False
+                game_screen[1].hidden = True
+                game_screen[24].hidden = True
+            elif keys[pygame.K_RIGHT] or keys[pygame.K_3]:
+                if any(abs(song_pos - timestamp) <= 150 for timestamp in user_level_right):
+                    change_score("perfect")
+                elif any(abs(song_pos - timestamp) <= 200 for timestamp in user_level_right):
+                    change_score("great")
+                elif any(abs(song_pos - timestamp) <= 300 for timestamp in user_level_right):
+                    change_score("good")
+                else:
+                    change_score("miss")
+                if current_score != 0:
+                    game_screen[-13 + current_score].hidden = True
+                    game_screen[-13 + current_score].hidden = False
+                game_screen[user_right_pose_index[random_pose_index]].hidden = False
+                game_screen[1].hidden = True
+                game_screen[24].hidden = True
+        if rating_on:
+            rating_on_timer += 1
+            if rating_on_timer >= 150:
+                rating_on_timer = 0
+                rating_on = False
+                i = 0
+                while i <= 3:
+                    game_screen[user_left_pose_index[i]].hidden = True
+                    game_screen[user_right_pose_index[i]].hidden = True
+                    game_screen[user_neutral_pose_index[int(i / 2)]].hidden = True
+                    i += 1
 
+                game_screen[26].hidden = True
+                game_screen[27].hidden = True
+                game_screen[28].hidden = True
+                game_screen[29].hidden = True
+        if random_pose_index_timer >= 1:
+            random_pose_index_timer += 1
+            if random_pose_index_timer >= 150:
+                random_pose_index_timer = 0
+        time.sleep(0.005)
+        if not pygame.mixer.music.get_busy():
+            set_stage_complete_screen = True
+            set_game_screen = False
+            time.sleep(0.2)
+    elif set_menu_screen:
+        pygame.mixer.music.pause()
+        display.show(menu_screen)
+        time.sleep(0.05)
+        if keys[pygame.K_SPACE] or keys[pygame.K_UP] or keys[pygame.K_2]:
+            menu_option = change_menu_option(menu_option)
+        if keys[pygame.K_RETURN] or keys[pygame.K_RIGHT] or keys[pygame.K_3]:
+            if menu_option == "back_to_game":
+                print("Setting game screen")
+                set_game_screen = True
+                pygame.mixer.music.unpause()
+            elif menu_option == "restart":
+                print("restarting")
+                restart()
+                set_game_screen = True
+            elif menu_option == "how_to_play":
+                print("how to play")
+                set_how_to_play_screen = True
+            elif menu_option == "difficulty":
+                print("set difficulty")
+                set_difficulty_screen = True
+            elif menu_option == "quit":
+                print("quitting")
+                set_home_screen = True
+                restart()
+            set_menu_screen = False
+            time.sleep(0.2)
 
+    elif set_stage_complete_screen:
+        display.show(stage_complete_screen)
+        time.sleep(0.05)
+        stage_complete_screen[-13 + current_score].hidden = False
+        if keys[pygame.K_SPACE] or keys[pygame.K_UP] or keys[pygame.K_2]:
+            endgame_option = change_endgame_option(endgame_option)
+        if keys[pygame.K_RETURN] or keys[pygame.K_RIGHT] or keys[pygame.K_3]:
+            if endgame_option == "restart":
+                set_game_screen = True
+                set_stage_complete_screen = False
+                restart()
+            elif endgame_option == "quit":
+                set_home_screen = True
+                set_stage_complete_screen = False
+                restart()
+            music_loaded = False
+            time.sleep(0.2)
 
 
 
