@@ -1050,6 +1050,16 @@ user_normal_copycat_curry_left = [11500, 25500, 42500]
 user_normal_copycat_curry_right = [19500, 31500, 39000, 49000]
 user_normal_copycat_curry_random = [23500, 27500, 33500, 38500, 43000, 46500, 47500, 48500]
 
+model_hard_time_to_shine_neutral = [7000, 16800, 31000, 35350, 40500, 42000, 49000]
+model_hard_time_to_shine_left = [5000, 16400, 23000, 39000, 48000]
+model_hard_time_to_shine_right = [9000, 15000, 23350, 42500]
+model_hard_time_to_shine_random = [8000, 16000, 27000, 27350, 31350, 35000, 40000, 41000, 48500]
+
+user_hard_time_to_shine_neutral = [11000, 20800, 33000, 37350, 46000, 51000]
+user_hard_time_to_shine_left = [6000, 20400, 25000, 43000, 50000]
+user_hard_time_to_shine_right = [13000, 19000, 25350, 46500]
+user_hard_time_to_shine_random = [12000, 20000, 29000, 29350, 33350, 37000, 44000, 45000, 50500]
+
 home_screen = displayio.Group()
 home_screen.append(home_bg_sprite)
 home_screen.append(user_rabbit_sprite)
@@ -1212,7 +1222,7 @@ def set_poses(level_difficulty):
         user_level_right = user_easy_take_a_stab_right
         user_level_neutral = user_easy_take_a_stab_neutral
         user_level_random = user_easy_take_a_stab_random
-    if level_difficulty == "normal":
+    elif level_difficulty == "normal":
         model_level_left = model_normal_copycat_curry_left
         model_level_right = model_normal_copycat_curry_right
         model_level_neutral = model_normal_copycat_curry_neutral
@@ -1221,6 +1231,15 @@ def set_poses(level_difficulty):
         user_level_right = user_normal_copycat_curry_right
         user_level_neutral = user_normal_copycat_curry_neutral
         user_level_random = user_normal_copycat_curry_random
+    elif level_difficulty == "hard":
+        model_level_left = model_hard_time_to_shine_left
+        model_level_right = model_hard_time_to_shine_right
+        model_level_neutral = model_hard_time_to_shine_neutral
+        model_level_random = model_hard_time_to_shine_random
+        user_level_left = user_hard_time_to_shine_left
+        user_level_right = user_hard_time_to_shine_right
+        user_level_neutral = user_hard_time_to_shine_neutral
+        user_level_random = user_hard_time_to_shine_random
 
     all_level_timestamps = model_level_left + model_level_right + model_level_neutral + model_level_random + user_level_left + user_level_right + user_level_neutral + user_level_random
 
@@ -1382,7 +1401,7 @@ while True:
             game_screen[31].hidden = True
             game_screen[32].hidden = False
 
-        if any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 350) for timestamp in model_level_left):
+        if any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 200) for timestamp in model_level_left):
             if random_pose_index_timer == 0:
                 random_pose_index = randint(0, 3)
                 random_pose_index_timer += 1
@@ -1392,7 +1411,7 @@ while True:
                 if not rating_on:
                     game_screen[24].hidden = False
                 game_screen[1].hidden = True
-        elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 350) for timestamp in model_level_right):
+        elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 200) for timestamp in model_level_right):
             if random_pose_index_timer == 0:
                 random_pose_index = randint(0, 3)
                 random_pose_index_timer += 1
@@ -1402,7 +1421,7 @@ while True:
                 if not rating_on:
                     game_screen[24].hidden = False
                 game_screen[1].hidden = True
-        elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 350) for timestamp in model_level_neutral):
+        elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 200) for timestamp in model_level_neutral):
             if random_pose_index_timer == 0:
                 random_pose_index = randint(0, 3)
                 random_pose_index_timer += 1
