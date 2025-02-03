@@ -1004,6 +1004,8 @@ misses = 0
 endgame_option = "restart"
 menu_option = "back_to_game"
 
+confetti_timer = 0
+
 # Posing timestamps for songs
 model_level_neutral = []
 model_level_left = []
@@ -1014,6 +1016,8 @@ user_level_neutral = []
 user_level_left = []
 user_level_right = []
 user_level_random = []
+
+all_level_timestamps = []
 
 model_easy_take_a_stab_neutral = [12000, 21000, 33000]
 model_easy_take_a_stab_left = [4000, 16000, 19000, 25000, 37000]
@@ -1092,6 +1096,7 @@ game_screen.append(perfect_sprite)
 game_screen[-1].hidden = True
 
 for beat_sign in beat_signs:
+    print(beat_sign)
     game_screen.append(beat_sign)
     game_screen[-1].hidden = True
 for score in in_game_score_sprites:
@@ -1184,7 +1189,7 @@ def change_endgame_option(option):
     return option
 
 def set_poses(level_difficulty):
-    global model_level_left, model_level_right, model_level_neutral, model_level_random, user_level_left, user_level_right, user_level_neutral, user_level_random
+    global all_level_timestamps, model_level_left, model_level_right, model_level_neutral, model_level_random, user_level_left, user_level_right, user_level_neutral, user_level_random
     if level_difficulty == "easy":
         model_level_left = model_easy_take_a_stab_left
         model_level_right = model_easy_take_a_stab_right
@@ -1203,6 +1208,8 @@ def set_poses(level_difficulty):
         user_level_right = user_normal_copycat_curry_right
         user_level_neutral = user_normal_copycat_curry_neutral
         user_level_random = user_normal_copycat_curry_random
+
+    all_level_timestamps = model_level_left + model_level_right + model_level_neutral + model_level_random + user_level_left + user_level_right + user_level_neutral + user_level_random
 
 
 def distribute_randoms():
@@ -1252,32 +1259,33 @@ def change_score(rating):
         misses += (1/num_song_timestamps)
         game_screen[26].hidden = False
 
-    if percentage_score == 1:
-        current_score = 12
-    elif percentage_score >= 0.98:
-        current_score = 11
-    elif percentage_score >= 0.95:
-        current_score = 10
-    elif percentage_score >= 0.90:
-        current_score = 9
-    elif percentage_score >= 0.75:
-        current_score = 8
-    elif percentage_score >= 0.5:
-        current_score = 7
-    elif percentage_score >= 0.25:
-        current_score = 6
-    elif percentage_score >= 0.20:
-        current_score = 5
-    elif percentage_score >= 0.15:
-        current_score = 4
-    elif percentage_score >= 0.10:
-        current_score = 3
-    elif percentage_score >= 0.05:
-        current_score = 2
-    elif percentage_score >= 0.01:
-        current_score = 1
-    elif percentage_score == 0:
-        current_score = 0
+    current_score = 12
+    # if percentage_score == 1:
+    #     current_score = 12
+    # elif percentage_score >= 0.98:
+    #     current_score = 11
+    # elif percentage_score >= 0.95:
+    #     current_score = 10
+    # elif percentage_score >= 0.90:
+    #     current_score = 9
+    # elif percentage_score >= 0.75:
+    #     current_score = 8
+    # elif percentage_score >= 0.5:
+    #     current_score = 7
+    # elif percentage_score >= 0.25:
+    #     current_score = 6
+    # elif percentage_score >= 0.20:
+    #     current_score = 5
+    # elif percentage_score >= 0.15:
+    #     current_score = 4
+    # elif percentage_score >= 0.10:
+    #     current_score = 3
+    # elif percentage_score >= 0.05:
+    #     current_score = 2
+    # elif percentage_score >= 0.01:
+    #     current_score = 1
+    # elif percentage_score == 0:
+    #     current_score = 0
 
 def restart():
     global current_score, percentage_score, perfects, greats, goods, misses, music_loaded
@@ -1288,6 +1296,20 @@ def restart():
     goods = 0
     misses = 0
     music_loaded = False
+
+    i = 0
+    while i <= 3:
+        game_screen[user_left_pose_index[i]].hidden = True
+        game_screen[user_right_pose_index[i]].hidden = True
+        game_screen[user_neutral_pose_index[int(i / 2)]].hidden = True
+        i += 1
+    game_screen[26].hidden = True
+    game_screen[27].hidden = True
+    game_screen[28].hidden = True
+    game_screen[29].hidden = True
+    game_screen[32].hidden = True
+    game_screen[30].hidden = True
+    game_screen[31].hidden = True
 
 
 # Game loop and controls
@@ -1330,6 +1352,29 @@ while True:
             music_loaded, song_pos_offset = load_music(level, song_pos_offset)
             pygame.mixer.music.play(loops=0)
         song_pos = pygame.mixer.music.get_pos() - song_pos_offset
+
+        if any(0 <= abs(timestamp - song_pos) <= 50 for timestamp in all_level_timestamps):
+            game_screen[32].hidden = True
+            game_screen[30].hidden = True
+            game_screen[31].hidden = True
+            print(song_pos)
+            print("500")
+        elif any(0 <= (timestamp - song_pos) <= 550 for timestamp in all_level_timestamps):
+            game_screen[32].hidden = True
+            game_screen[31].hidden = True
+            game_screen[30].hidden = False
+            print("1000")
+        elif any(0 <= (timestamp - song_pos) <= 1050 for timestamp in all_level_timestamps):
+            game_screen[32].hidden = True
+            game_screen[30].hidden = True
+            game_screen[31].hidden = False
+            print("1500")
+        elif any(0 <= (timestamp - song_pos) <= 1550 for timestamp in all_level_timestamps):
+            game_screen[30].hidden = True
+            game_screen[31].hidden = True
+            game_screen[32].hidden = False
+            print("2000")
+
         if any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) <= 500) for timestamp in model_level_left):
             if random_pose_index_timer == 0:
                 random_pose_index = randint(0, 3)
@@ -1483,6 +1528,34 @@ while True:
         display.show(stage_complete_screen)
         time.sleep(0.05)
         stage_complete_screen[-13 + current_score].hidden = False
+        if current_score == 12:
+            stage_complete_screen[5].hidden = False
+            if confetti_timer > 3:
+                confetti_timer = 0
+            match confetti_timer:
+                case 0:
+                    stage_complete_screen[7].hidden = True
+                    stage_complete_screen[8].hidden = True
+                    stage_complete_screen[9].hidden = True
+                    stage_complete_screen[6].hidden = False
+                case 1:
+                    stage_complete_screen[6].hidden = True
+                    stage_complete_screen[8].hidden = True
+                    stage_complete_screen[9].hidden = True
+                    stage_complete_screen[7].hidden = False
+                case 2:
+                    stage_complete_screen[6].hidden = True
+                    stage_complete_screen[7].hidden = True
+                    stage_complete_screen[9].hidden = True
+                    stage_complete_screen[8].hidden = False
+                case 3:
+                    stage_complete_screen[7].hidden = True
+                    stage_complete_screen[8].hidden = True
+                    stage_complete_screen[6].hidden = True
+                    stage_complete_screen[9].hidden = False
+
+            confetti_timer += 0.5
+
         if keys[pygame.K_SPACE] or keys[pygame.K_UP] or keys[pygame.K_2]:
             endgame_option = change_endgame_option(endgame_option)
         if keys[pygame.K_RETURN] or keys[pygame.K_RIGHT] or keys[pygame.K_3]:
