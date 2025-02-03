@@ -1,6 +1,8 @@
 # How To Play Rabeat
 Rabeat is a collection of rabbit-themed rhythm games! To access a more detailed description, visit the [Readme](./README.md).
 
+Read on to find instructions for playing this game!
+
 ## Home Screen
 Press any button to advance to the next screen.
 
@@ -90,5 +92,5 @@ To select the highlighted menu option, press:
 - 3
 
 ## How To Play Screen
-The player can find a link to instructions for playing the game by accessing the How To Play screen. 
+The player can find a QR Code to instructions for playing the game by accessing the How To Play screen. 
 Once entered, any button may be pressed to exit it.

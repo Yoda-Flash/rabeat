@@ -964,6 +964,17 @@ menu_quit_sprite = displayio.TileGrid(
     pixel_shader=menu_quit_palette
 )
 
+qr, qr_palette = adafruit_imageload.load(
+    "./qr.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+qr_palette.make_transparent(0)
+qr_sprite = displayio.TileGrid(
+    qr,
+    pixel_shader=qr_palette
+)
+
 # Screen settings
 set_home_screen = True
 set_difficulty_screen = False
@@ -1029,15 +1040,15 @@ user_easy_take_a_stab_left = [6000, 18000, 20000, 26000, 38000]
 user_easy_take_a_stab_right = [10000, 28000, 36000]
 user_easy_take_a_stab_random = [24000, 30000, 32000]
 
-model_normal_copycat_curry_neutral = [12000, 21000, 33000]
-model_normal_copycat_curry_left = [4000, 16000, 19000, 25000, 37000]
-model_normal_copycat_curry_right = [8000, 27000, 35000]
-model_normal_copycat_curry_random = [23000, 29000, 31000]
+model_normal_copycat_curry_neutral = [5500, 13500, 28500, 41500, 47500]
+model_normal_copycat_curry_left = [9500, 24500, 40500]
+model_normal_copycat_curry_right = [17500, 30500, 37000, 47000]
+model_normal_copycat_curry_random = [22500, 26500, 32500, 36500, 41000, 44500, 45500, 46500]
 
-user_normal_copycat_curry_neutral = [14000, 22000, 34000]
-user_normal_copycat_curry_left = [6000, 18000, 20000, 26000, 38000]
-user_normal_copycat_curry_right = [10000, 28000, 36000]
-user_normal_copycat_curry_random = [24000, 30000, 32000]
+user_normal_copycat_curry_neutral = [7500, 15500, 29500, 43500, 49500]
+user_normal_copycat_curry_left = [11500, 25500, 42500]
+user_normal_copycat_curry_right = [19500, 31500, 39000, 49000]
+user_normal_copycat_curry_random = [23500, 27500, 33500, 38500, 43000, 46500, 47500, 48500]
 
 home_screen = displayio.Group()
 home_screen.append(home_bg_sprite)
@@ -1096,7 +1107,6 @@ game_screen.append(perfect_sprite)
 game_screen[-1].hidden = True
 
 for beat_sign in beat_signs:
-    print(beat_sign)
     game_screen.append(beat_sign)
     game_screen[-1].hidden = True
 for score in in_game_score_sprites:
@@ -1135,6 +1145,9 @@ menu_screen[-1].hidden = True
 menu_screen.append(menu_quit_sprite)
 menu_screen[-1].hidden = True
 
+how_to_play_screen = displayio.Group()
+how_to_play_screen.append(lightened_bg_sprite)
+how_to_play_screen.append(qr_sprite)
 
 def change_difficulty(level_difficulty):
     if level_difficulty == "easy":
@@ -1259,33 +1272,32 @@ def change_score(rating):
         misses += (1/num_song_timestamps)
         game_screen[26].hidden = False
 
-    current_score = 12
-    # if percentage_score == 1:
-    #     current_score = 12
-    # elif percentage_score >= 0.98:
-    #     current_score = 11
-    # elif percentage_score >= 0.95:
-    #     current_score = 10
-    # elif percentage_score >= 0.90:
-    #     current_score = 9
-    # elif percentage_score >= 0.75:
-    #     current_score = 8
-    # elif percentage_score >= 0.5:
-    #     current_score = 7
-    # elif percentage_score >= 0.25:
-    #     current_score = 6
-    # elif percentage_score >= 0.20:
-    #     current_score = 5
-    # elif percentage_score >= 0.15:
-    #     current_score = 4
-    # elif percentage_score >= 0.10:
-    #     current_score = 3
-    # elif percentage_score >= 0.05:
-    #     current_score = 2
-    # elif percentage_score >= 0.01:
-    #     current_score = 1
-    # elif percentage_score == 0:
-    #     current_score = 0
+    if percentage_score == 1:
+        current_score = 12
+    elif percentage_score >= 0.98:
+        current_score = 11
+    elif percentage_score >= 0.95:
+        current_score = 10
+    elif percentage_score >= 0.90:
+        current_score = 9
+    elif percentage_score >= 0.75:
+        current_score = 8
+    elif percentage_score >= 0.5:
+        current_score = 7
+    elif percentage_score >= 0.25:
+        current_score = 6
+    elif percentage_score >= 0.20:
+        current_score = 5
+    elif percentage_score >= 0.15:
+        current_score = 4
+    elif percentage_score >= 0.10:
+        current_score = 3
+    elif percentage_score >= 0.05:
+        current_score = 2
+    elif percentage_score >= 0.01:
+        current_score = 1
+    elif percentage_score == 0:
+        current_score = 0
 
 def restart():
     global current_score, percentage_score, perfects, greats, goods, misses, music_loaded
@@ -1357,25 +1369,20 @@ while True:
             game_screen[32].hidden = True
             game_screen[30].hidden = True
             game_screen[31].hidden = True
-            print(song_pos)
-            print("500")
         elif any(0 <= (timestamp - song_pos) <= 550 for timestamp in all_level_timestamps):
             game_screen[32].hidden = True
             game_screen[31].hidden = True
             game_screen[30].hidden = False
-            print("1000")
         elif any(0 <= (timestamp - song_pos) <= 1050 for timestamp in all_level_timestamps):
             game_screen[32].hidden = True
             game_screen[30].hidden = True
             game_screen[31].hidden = False
-            print("1500")
         elif any(0 <= (timestamp - song_pos) <= 1550 for timestamp in all_level_timestamps):
             game_screen[30].hidden = True
             game_screen[31].hidden = True
             game_screen[32].hidden = False
-            print("2000")
 
-        if any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) <= 500) for timestamp in model_level_left):
+        if any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 350) for timestamp in model_level_left):
             if random_pose_index_timer == 0:
                 random_pose_index = randint(0, 3)
                 random_pose_index_timer += 1
@@ -1385,7 +1392,7 @@ while True:
                 if not rating_on:
                     game_screen[24].hidden = False
                 game_screen[1].hidden = True
-        elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) <= 500) for timestamp in model_level_right):
+        elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 350) for timestamp in model_level_right):
             if random_pose_index_timer == 0:
                 random_pose_index = randint(0, 3)
                 random_pose_index_timer += 1
@@ -1395,7 +1402,7 @@ while True:
                 if not rating_on:
                     game_screen[24].hidden = False
                 game_screen[1].hidden = True
-        elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) <= 500) for timestamp in model_level_neutral):
+        elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 350) for timestamp in model_level_neutral):
             if random_pose_index_timer == 0:
                 random_pose_index = randint(0, 3)
                 random_pose_index_timer += 1
@@ -1411,16 +1418,24 @@ while True:
             if not rating_on:
                 game_screen[24].hidden = False
             game_screen[1].hidden = True
+            i = 0
+            while i <= 3:
+                game_screen[model_left_pose_index[i]].hidden = True
+                game_screen[model_right_pose_index[i]].hidden = True
+                game_screen[model_neutral_pose_index[int(i / 2)]].hidden = True
+                i += 1
         else:
             if not rating_on:
                 game_screen[1].hidden = False
             game_screen[24].hidden = True
             game_screen[2].hidden = False
             game_screen[25].hidden = True
-            game_screen[model_left_pose_index[random_pose_index]].hidden = True
-            game_screen[model_right_pose_index[random_pose_index]].hidden = True
-            game_screen[model_neutral_pose_index[int(random_pose_index / 2)]].hidden = True
-
+            i = 0
+            while i <= 3:
+                game_screen[model_left_pose_index[i]].hidden = True
+                game_screen[model_right_pose_index[i]].hidden = True
+                game_screen[model_neutral_pose_index[int(i / 2)]].hidden = True
+                i += 1
         if not rating_on and not user_lock:
             if keys[pygame.K_UP] or keys[pygame.K_2]:
                 if any(abs(song_pos - timestamp) <= 150 for timestamp in user_level_neutral):
@@ -1504,21 +1519,16 @@ while True:
             menu_option = change_menu_option(menu_option)
         if keys[pygame.K_RETURN] or keys[pygame.K_RIGHT] or keys[pygame.K_3]:
             if menu_option == "back_to_game":
-                print("Setting game screen")
                 set_game_screen = True
                 pygame.mixer.music.unpause()
             elif menu_option == "restart":
-                print("restarting")
                 restart()
                 set_game_screen = True
             elif menu_option == "how_to_play":
-                print("how to play")
                 set_how_to_play_screen = True
             elif menu_option == "difficulty":
-                print("set difficulty")
                 set_difficulty_screen = True
             elif menu_option == "quit":
-                print("quitting")
                 set_home_screen = True
                 restart()
             set_menu_screen = False
@@ -1569,6 +1579,13 @@ while True:
                 restart()
             music_loaded = False
             time.sleep(0.2)
+    elif set_how_to_play_screen:
+        display.show(how_to_play_screen)
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                set_menu_screen = True
+                set_how_to_play_screen = False
+                time.sleep(0.2)
 
 
 
