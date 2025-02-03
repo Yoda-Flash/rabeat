@@ -1,9 +1,10 @@
 # How To Play Rabeat
+Rabeat is a collection of rabbit-themed rhythm games! To access a more detailed description, visit the [Readme](./README.md).
 
-## 1. Home Screen
+## Home Screen
 Press any button to advance to the next screen.
 
-## 2. Difficulty Screen
+## Difficulty Screen
 The game has different difficulty levels, each with rhythms of varying difficulty.
 
 Depending on the player's device, to change the difficulty, press:
