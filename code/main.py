@@ -1045,20 +1045,20 @@ model_normal_copycat_curry_left = [9500, 24500, 40500]
 model_normal_copycat_curry_right = [17500, 30500, 37000, 47000]
 model_normal_copycat_curry_random = [22500, 26500, 32500, 36500, 41000, 44500, 45500, 46500]
 
-user_normal_copycat_curry_neutral = [7500, 15500, 29500, 43500, 49500]
+user_normal_copycat_curry_neutral = [7500, 15500, 29500, 43500, 51500]
 user_normal_copycat_curry_left = [11500, 25500, 42500]
-user_normal_copycat_curry_right = [19500, 31500, 39000, 49000]
-user_normal_copycat_curry_random = [23500, 27500, 33500, 38500, 43000, 46500, 47500, 48500]
+user_normal_copycat_curry_right = [19500, 31500, 39000, 51000]
+user_normal_copycat_curry_random = [23500, 27500, 33500, 38500, 43000, 48500, 49500, 50500]
 
-model_hard_time_to_shine_neutral = [7000, 16800, 31000, 35350, 40500, 42000, 49000]
-model_hard_time_to_shine_left = [5000, 16400, 23000, 39000, 48000]
+model_hard_time_to_shine_neutral = [7000, 16800, 31000, 35350, 40500, 42000]
+model_hard_time_to_shine_left = [5000, 16400, 23000, 39000]
 model_hard_time_to_shine_right = [9000, 15000, 23350, 42500]
-model_hard_time_to_shine_random = [8000, 16000, 27000, 27350, 31350, 35000, 40000, 41000, 48500]
+model_hard_time_to_shine_random = [8000, 16000, 27000, 27350, 31350, 35000, 40000, 41000]
 
-user_hard_time_to_shine_neutral = [11000, 20800, 33000, 37350, 46000, 51000]
-user_hard_time_to_shine_left = [6000, 20400, 25000, 43000, 50000]
+user_hard_time_to_shine_neutral = [11000, 20800, 33000, 37350, 44500, 46000]
+user_hard_time_to_shine_left = [6000, 20400, 25000, 43000]
 user_hard_time_to_shine_right = [13000, 19000, 25350, 46500]
-user_hard_time_to_shine_random = [12000, 20000, 29000, 29350, 33350, 37000, 44000, 45000, 50500]
+user_hard_time_to_shine_random = [12000, 20000, 29000, 29350, 33350, 37000, 44000, 45000]
 
 home_screen = displayio.Group()
 home_screen.append(home_bg_sprite)
@@ -1122,7 +1122,7 @@ for beat_sign in beat_signs:
 for score in in_game_score_sprites:
     game_screen.append(score)
     game_screen[-1].hidden = True
-game_screen[-13 + current_score].hidden = False
+game_screen[-13].hidden = False
 
 stage_complete_screen = displayio.Group()
 stage_complete_screen.append(stage_complete_bg_sprite)
@@ -1334,6 +1334,10 @@ def restart():
         game_screen[user_right_pose_index[i]].hidden = True
         game_screen[user_neutral_pose_index[int(i / 2)]].hidden = True
         i += 1
+    i = 0
+    while i <= 12:
+        game_screen[-13 + i].hidden = True
+        i += 1
     game_screen[26].hidden = True
     game_screen[27].hidden = True
     game_screen[28].hidden = True
@@ -1375,6 +1379,8 @@ while True:
             time.sleep(0.5)
     elif set_game_screen:
         display.show(game_screen)
+        if current_score == 0:
+            game_screen[-13].hidden = False
         if (keys[pygame.K_LEFT] and (keys[pygame.K_RIGHT] or keys[pygame.K_UP])) or (keys[pygame.K_UP] and keys[pygame.K_RIGHT]) or (keys[pygame.K_1] and (keys[pygame.K_2] or keys[pygame.K_3])) or (keys[pygame.K_2] and keys[pygame.K_3]):
             set_menu_screen = True
             set_game_screen = False
@@ -1405,38 +1411,38 @@ while True:
             if random_pose_index_timer == 0:
                 random_pose_index = randint(0, 3)
                 random_pose_index_timer += 1
-            game_screen[model_left_pose_index[random_pose_index]].hidden = False
             game_screen[2].hidden = True
+            game_screen[model_left_pose_index[random_pose_index]].hidden = False
             if song_pos % 500 <= 50:
+                game_screen[1].hidden = True
                 if not rating_on:
                     game_screen[24].hidden = False
-                game_screen[1].hidden = True
         elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 200) for timestamp in model_level_right):
             if random_pose_index_timer == 0:
                 random_pose_index = randint(0, 3)
                 random_pose_index_timer += 1
-            game_screen[model_right_pose_index[random_pose_index]].hidden = False
             game_screen[2].hidden = True
+            game_screen[model_right_pose_index[random_pose_index]].hidden = False
             if song_pos % 500 <= 50:
+                game_screen[1].hidden = True
                 if not rating_on:
                     game_screen[24].hidden = False
-                game_screen[1].hidden = True
         elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 200) for timestamp in model_level_neutral):
             if random_pose_index_timer == 0:
                 random_pose_index = randint(0, 3)
                 random_pose_index_timer += 1
-            game_screen[model_neutral_pose_index[int(random_pose_index/2)]].hidden = False
             game_screen[2].hidden = True
+            game_screen[model_neutral_pose_index[int(random_pose_index/2)]].hidden = False
             if song_pos % 500 <= 50:
+                game_screen[1].hidden = True
                 if not rating_on:
                     game_screen[24].hidden = False
-                game_screen[1].hidden = True
         elif song_pos % 500 <= 50:
-            game_screen[25].hidden = False
             game_screen[2].hidden = True
+            game_screen[25].hidden = False
+            game_screen[1].hidden = True
             if not rating_on:
                 game_screen[24].hidden = False
-            game_screen[1].hidden = True
             i = 0
             while i <= 3:
                 game_screen[model_left_pose_index[i]].hidden = True
@@ -1444,11 +1450,11 @@ while True:
                 game_screen[model_neutral_pose_index[int(i / 2)]].hidden = True
                 i += 1
         else:
+            game_screen[24].hidden = True
+            game_screen[25].hidden = True
             if not rating_on:
                 game_screen[1].hidden = False
-            game_screen[24].hidden = True
             game_screen[2].hidden = False
-            game_screen[25].hidden = True
             i = 0
             while i <= 3:
                 game_screen[model_left_pose_index[i]].hidden = True
@@ -1466,11 +1472,14 @@ while True:
                 else:
                     change_score("miss")
                 if current_score != 0:
-                    game_screen[-13 + current_score].hidden = True
+                    game_screen[-13 + current_score - 1].hidden = True
+                    game_screen[-13].hidden = True
                     game_screen[-13 + current_score].hidden = False
-                game_screen[user_neutral_pose_index[int(random_pose_index / 2)]].hidden = False
+                elif current_score == 0:
+                    game_screen[-13].hidden = False
                 game_screen[1].hidden = True
                 game_screen[24].hidden = True
+                game_screen[user_neutral_pose_index[int(random_pose_index / 2)]].hidden = False
             elif keys[pygame.K_LEFT] or keys[pygame.K_1]:
                 if any(abs(song_pos - timestamp) <= 150 for timestamp in user_level_left):
                     change_score("perfect")
@@ -1481,8 +1490,11 @@ while True:
                 else:
                     change_score("miss")
                 if current_score != 0:
-                    game_screen[-13 + current_score].hidden = True
+                    game_screen[-13 + current_score - 1].hidden = True
+                    game_screen[-13].hidden = True
                     game_screen[-13 + current_score].hidden = False
+                elif current_score == 0:
+                    game_screen[-13].hidden = False
                 game_screen[user_left_pose_index[random_pose_index]].hidden = False
                 game_screen[1].hidden = True
                 game_screen[24].hidden = True
@@ -1496,8 +1508,11 @@ while True:
                 else:
                     change_score("miss")
                 if current_score != 0:
-                    game_screen[-13 + current_score].hidden = True
+                    game_screen[-13 + current_score - 1].hidden = True
+                    game_screen[-13].hidden = True
                     game_screen[-13 + current_score].hidden = False
+                elif current_score == 0:
+                    game_screen[-13].hidden = False
                 game_screen[user_right_pose_index[random_pose_index]].hidden = False
                 game_screen[1].hidden = True
                 game_screen[24].hidden = True
@@ -1507,7 +1522,7 @@ while True:
             user_lock = False
         if rating_on:
             rating_on_timer += 1
-            if rating_on_timer >= 150:
+            if rating_on_timer >= 50:
                 rating_on_timer = 0
                 rating_on = False
                 i = 0
@@ -1605,7 +1620,3 @@ while True:
                 set_menu_screen = True
                 set_how_to_play_screen = False
                 time.sleep(0.2)
-
-
-
-
