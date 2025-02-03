@@ -553,6 +553,43 @@ model_rabbit_right4_sprite = displayio.TileGrid(
 )
 model_rabbits_right.append(model_rabbit_right4_sprite)
 
+beat_signs = []
+beat_signs1, beat_signs1_palette = adafruit_imageload.load(
+    "./art/beat_signs/1.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+beat_signs1_palette.make_transparent(0)
+beat_signs1_sprite = displayio.TileGrid(
+    beat_signs1,
+    pixel_shader=beat_signs1_palette
+)
+beat_signs.append(beat_signs1_sprite)
+
+beat_signs2, beat_signs2_palette = adafruit_imageload.load(
+    "./art/beat_signs/2.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+beat_signs2_palette.make_transparent(0)
+beat_signs2_sprite = displayio.TileGrid(
+    beat_signs2,
+    pixel_shader=beat_signs2_palette
+)
+beat_signs.append(beat_signs2_sprite)
+
+beat_signs3, beat_signs3_palette = adafruit_imageload.load(
+    "./art/beat_signs/3.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+beat_signs3_palette.make_transparent(0)
+beat_signs3_sprite = displayio.TileGrid(
+    beat_signs3,
+    pixel_shader=beat_signs3_palette
+)
+beat_signs.append(beat_signs3_sprite)
+
 stage_complete_bg = displayio.OnDiskBitmap("./art/stage_complete.bmp")
 stage_complete_bg_sprite = displayio.TileGrid(
     stage_complete_bg,
@@ -750,6 +787,66 @@ end_game_score12_sprite = displayio.TileGrid(
 )
 end_game_score_sprites.append(end_game_score12_sprite)
 
+perfect_stage, perfect_stage_palette = adafruit_imageload.load(
+    "./art/perfect_stage.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+perfect_stage_palette.make_transparent(0)
+perfect_stage_sprite = displayio.TileGrid(
+    perfect_stage,
+    pixel_shader=perfect_stage_palette
+)
+
+confetti = []
+confetti1, confetti1_palette = adafruit_imageload.load(
+    "./art/confetti/1.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+confetti1_palette.make_transparent(0)
+confetti1_sprite = displayio.TileGrid(
+    confetti1,
+    pixel_shader=confetti1_palette
+)
+confetti.append(confetti1_sprite)
+
+confetti2, confetti2_palette = adafruit_imageload.load(
+    "./art/confetti/2.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+confetti2_palette.make_transparent(0)
+confetti2_sprite = displayio.TileGrid(
+    confetti2,
+    pixel_shader=confetti2_palette
+)
+confetti.append(confetti2_sprite)
+
+confetti3, confetti3_palette = adafruit_imageload.load(
+    "./art/confetti/3.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+confetti3_palette.make_transparent(0)
+confetti3_sprite = displayio.TileGrid(
+    confetti3,
+    pixel_shader=confetti3_palette
+)
+confetti.append(confetti3_sprite)
+
+confetti4, confetti4_palette = adafruit_imageload.load(
+    "./art/confetti/4.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+confetti4_palette.make_transparent(0)
+confetti4_sprite = displayio.TileGrid(
+    confetti4,
+    pixel_shader=confetti4_palette
+)
+confetti.append(confetti4_sprite)
+
 miss, miss_palette = adafruit_imageload.load(
     "./art/words/miss.bmp",
     bitmap=displayio.Bitmap,
@@ -893,6 +990,7 @@ random_pose_index = 0
 random_pose_index_timer = 0
 
 # Score settings
+user_lock = False # To make sure the user doesn't keep holding down a button
 rating_on = False
 rating_on_timer = 0
 num_song_timestamps = 0
@@ -993,6 +1091,9 @@ game_screen[-1].hidden = True
 game_screen.append(perfect_sprite)
 game_screen[-1].hidden = True
 
+for beat_sign in beat_signs:
+    game_screen.append(beat_sign)
+    game_screen[-1].hidden = True
 for score in in_game_score_sprites:
     game_screen.append(score)
     game_screen[-1].hidden = True
@@ -1006,6 +1107,11 @@ stage_complete_screen.append(endgame_restart_sprite)
 stage_complete_screen[-1].hidden = False
 stage_complete_screen.append(endgame_quit_sprite)
 stage_complete_screen[-1].hidden = True
+stage_complete_screen.append(perfect_stage_sprite)
+stage_complete_screen[-1].hidden = True
+for confetti in confetti:
+    stage_complete_screen.append(confetti)
+    stage_complete_screen[-1].hidden = True
 
 for score in end_game_score_sprites:
     stage_complete_screen.append(score)
@@ -1173,33 +1279,6 @@ def change_score(rating):
     elif percentage_score == 0:
         current_score = 0
 
-    # if perfects == 0 and greats == 0 and goods == 0:
-    #     current_score = 0
-    # elif perfects <= 0.25 or greats <= 0.25 and goods <= 0.25:
-    #     current_score = 1
-    # elif perfects <= 0.5 and misses > goods > greats:
-    #     current_score = 2
-    # elif perfects <= 0.5 and misses > greats > goods:
-    #     current_score = 3
-    # elif perfects <= 0.5 and goods > greats > misses:
-    #     current_score = 4
-    # elif perfects <= 0.5 and greats > goods > misses:
-    #     current_score = 5
-    # elif perfects <= 0.5 and misses > 0:
-    #     current_score = 6
-    # elif perfects <= 0.5 and greats <= 1 and goods <= 1 and misses == 0:
-    #     current_score = 7
-    # elif perfects <= 0.75 and misses > 0:
-    #     current_score = 8
-    # elif (perfects <= 0.75 and misses == 0) or (perfects <= 0.9 and (greats > 0 or goods > 0 or misses > 0)):
-    #     current_score = 9
-    # elif (perfects <= 0.9 and misses == 0) or (perfects <= 1 and (greats > 0 or goods > 0 or misses > 0)):
-    #     current_score = 10
-    # elif perfects <= 1 and misses == 0:
-    #     current_score = 11
-    # elif perfects == 1:
-    #     current_score = 12
-
 def restart():
     global current_score, percentage_score, perfects, greats, goods, misses, music_loaded
     current_score = 0
@@ -1296,7 +1375,8 @@ while True:
             game_screen[model_left_pose_index[random_pose_index]].hidden = True
             game_screen[model_right_pose_index[random_pose_index]].hidden = True
             game_screen[model_neutral_pose_index[int(random_pose_index / 2)]].hidden = True
-        if not rating_on:
+
+        if not rating_on and not user_lock:
             if keys[pygame.K_UP] or keys[pygame.K_2]:
                 if any(abs(song_pos - timestamp) <= 150 for timestamp in user_level_neutral):
                     change_score("perfect")
@@ -1342,6 +1422,10 @@ while True:
                 game_screen[user_right_pose_index[random_pose_index]].hidden = False
                 game_screen[1].hidden = True
                 game_screen[24].hidden = True
+        if keys[pygame.K_LEFT] or keys[pygame.K_UP] or keys[pygame.K_RIGHT] or keys[pygame.K_1] or keys[pygame.K_2] or keys[pygame.K_3]:
+            user_lock = True
+        else:
+            user_lock = False
         if rating_on:
             rating_on_timer += 1
             if rating_on_timer >= 150:
