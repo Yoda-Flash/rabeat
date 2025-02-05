@@ -1390,19 +1390,38 @@ while True:
             pygame.mixer.music.play(loops=0)
         song_pos = pygame.mixer.music.get_pos() - song_pos_offset
 
+        # Beat signs for both user and model
+        # if any(0 <= abs(timestamp - song_pos) <= 50 for timestamp in all_level_timestamps):
+        #     game_screen[32].hidden = True
+        #     game_screen[30].hidden = True
+        #     game_screen[31].hidden = True
+        # elif any(0 <= (timestamp - song_pos) <= 550 for timestamp in all_level_timestamps):
+        #     game_screen[32].hidden = True
+        #     game_screen[31].hidden = True
+        #     game_screen[30].hidden = False
+        # elif any(0 <= (timestamp - song_pos) <= 1050 for timestamp in all_level_timestamps):
+        #     game_screen[32].hidden = True
+        #     game_screen[30].hidden = True
+        #     game_screen[31].hidden = False
+        # elif any(0 <= (timestamp - song_pos) <= 1550 for timestamp in all_level_timestamps):
+        #     game_screen[30].hidden = True
+        #     game_screen[31].hidden = True
+        #     game_screen[32].hidden = False
+
+        # Beat signs for only user
         if any(0 <= abs(timestamp - song_pos) <= 50 for timestamp in all_level_timestamps):
             game_screen[32].hidden = True
             game_screen[30].hidden = True
             game_screen[31].hidden = True
-        elif any(0 <= (timestamp - song_pos) <= 550 for timestamp in all_level_timestamps):
+        elif any(0 <= (timestamp - song_pos) <= 550 for timestamp in (user_level_left + user_level_neutral + user_level_right)):
             game_screen[32].hidden = True
             game_screen[31].hidden = True
             game_screen[30].hidden = False
-        elif any(0 <= (timestamp - song_pos) <= 1050 for timestamp in all_level_timestamps):
+        elif any(0 <= (timestamp - song_pos) <= 1050 for timestamp in (user_level_left + user_level_neutral + user_level_right)):
             game_screen[32].hidden = True
             game_screen[30].hidden = True
             game_screen[31].hidden = False
-        elif any(0 <= (timestamp - song_pos) <= 1550 for timestamp in all_level_timestamps):
+        elif any(0 <= (timestamp - song_pos) <= 1550 for timestamp in (user_level_left + user_level_neutral + user_level_right)):
             game_screen[30].hidden = True
             game_screen[31].hidden = True
             game_screen[32].hidden = False
