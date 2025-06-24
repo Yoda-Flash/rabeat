@@ -11,12 +11,12 @@ pygame.init()
 display = PyGameDisplay(width=128, height=128)
 
 # Background init
-background = displayio.OnDiskBitmap("./art/background.bmp")
+background = displayio.OnDiskBitmap("art/backgrounds/background.bmp")
 bg_sprite = displayio.TileGrid(
     background,
     pixel_shader=background.pixel_shader)
 
-home_background = displayio.OnDiskBitmap("./art/rabeat.bmp")
+home_background = displayio.OnDiskBitmap("art/backgrounds/rabeat.bmp")
 home_bg_sprite = displayio.TileGrid(
     home_background,
     pixel_shader=home_background.pixel_shader
@@ -34,7 +34,7 @@ button_to_start_sprite = displayio.TileGrid(
 )
 
 # Difficulty screen inits
-lightened_bg = displayio.OnDiskBitmap("./art/lightened_background.bmp")
+lightened_bg = displayio.OnDiskBitmap("art/backgrounds/lightened_background.bmp")
 lightened_bg_sprite = displayio.TileGrid(
     lightened_bg,
     pixel_shader=lightened_bg.pixel_shader
@@ -590,7 +590,7 @@ beat_signs3_sprite = displayio.TileGrid(
 )
 beat_signs.append(beat_signs3_sprite)
 
-stage_complete_bg = displayio.OnDiskBitmap("./art/stage_complete.bmp")
+stage_complete_bg = displayio.OnDiskBitmap("art/backgrounds/stage_complete.bmp")
 stage_complete_bg_sprite = displayio.TileGrid(
     stage_complete_bg,
     pixel_shader=stage_complete_bg.pixel_shader
@@ -892,7 +892,7 @@ perfect_sprite = displayio.TileGrid(
 )
 
 # Menu setup
-menu = displayio.OnDiskBitmap("./art/menu/menu.bmp")
+menu = displayio.OnDiskBitmap("./art/backgrounds/menu.bmp")
 menu_sprite = displayio.TileGrid(
     menu,
     pixel_shader=menu.pixel_shader
