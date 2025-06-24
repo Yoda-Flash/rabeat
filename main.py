@@ -1,4 +1,6 @@
 import os
+import time
+
 import adafruit_imageload
 import displayio
 import pygame
@@ -48,7 +50,6 @@ def createSpritesForDirectory(directory):
             )
             if getDirnameFromDirectory(entry.path) not in sprites:
                 sprites[getDirnameFromDirectory(entry.path)] = {}
-            print(getFilenameFromPath(entry.path))
             sprites[getDirnameFromDirectory(entry.path)][getFilenameFromPath(entry.path)] = image_sprite
 
 # Backgrounds setup
@@ -65,19 +66,74 @@ for entry in os.scandir("./art/backgrounds"):
 
 # Home Screen Setup
 home_screen = displayio.Group()
+home_screen_names = []
+
 home_screen.append(backgrounds["rabeat"])
+home_screen_names.append("rabeat")
+
 createSpritesForDirectory("./art/home")
 
-for sprite in sprites["home"].values():
-    home_screen.append(sprite)
+for sprite in sprites["home"]:
+    home_screen.append(sprites["home"][sprite])
+    home_screen_names.append(sprite)
 
 # Difficulty screen setup
 difficulty_screen = displayio.Group()
+difficulty_screen_names = []
+
 difficulty_screen.append(backgrounds["lightened_background"])
+difficulty_screen_names.append("lightened_background")
+
 createSpritesForDirectory("./art/difficulty")
 
-for sprite in sprites["difficulty"].values():
-    difficulty_screen.append(sprite)
+for sprite in sprites["difficulty"]:
+    difficulty_screen.append(sprites["difficulty"][sprite])
+    difficulty_screen_names.append(sprite)
+
+difficulty_screen[difficulty_screen_names.index("normal")].hidden = True
+difficulty_screen[difficulty_screen_names.index("hard")].hidden = True
+
+def is_left_button_pressed():
+    if keys[pygame.K_LEFT] or keys[pygame.K_1]:
+        return True
+
+def is_middle_button_pressed():
+    if keys[pygame.K_UP] or keys[pygame.K_DOWN] or keys[pygame.K_2]:
+        return True
+
+def is_right_button_pressed():
+    if keys[pygame.K_RIGHT] or keys[pygame.K_3]:
+        return True
+def load_music(level_difficulty, offset):
+    pass
+
+def change_difficulty(level_difficulty):
+    if level_difficulty == "easy":
+        difficulty_screen[difficulty_screen_names.index("easy")].hidden = True
+        difficulty_screen[difficulty_screen_names.index("normal")].hidden = False
+        level_difficulty = "normal"
+    elif level_difficulty == "normal":
+        difficulty_screen[difficulty_screen_names.index("normal")].hidden = True
+        difficulty_screen[difficulty_screen_names.index("hard")].hidden = False
+        level_difficulty = "hard"
+    elif level_difficulty == "hard":
+        difficulty_screen[difficulty_screen_names.index("hard")].hidden = True
+        difficulty_screen[difficulty_screen_names.index("easy")].hidden = False
+        level_difficulty = "easy"
+    time.sleep(0.15)
+    return level_difficulty
+
+def change_menu_option(option):
+    pass
+
+def change_endgame_option(option):
+    pass
+
+def change_score(rating):
+    pass
+
+def restart():
+    pass
 
 while True:
     for event in pygame.event.get():
@@ -94,4 +150,12 @@ while True:
                 set_difficulty_screen = True
                 set_home_screen = False
     elif set_difficulty_screen:
+        restart()
         display.show(difficulty_screen)
+        time.sleep(0.05)
+        if keys[pygame.K_SPACE] or is_middle_button_pressed():
+            level = change_difficulty(level)
+        if keys[pygame.K_RETURN] or is_right_button_pressed():
+            set_game_screen = True
+            set_difficulty_screen = False
+
