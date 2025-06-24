@@ -23,7 +23,7 @@ home_bg_sprite = displayio.TileGrid(
 )
 
 button_to_start, button_to_start_palette = adafruit_imageload.load(
-    "./art/button_to_start.bmp",
+    "art/home/button_to_start.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -270,7 +270,7 @@ user_rabbits_left = []
 user_rabbits_right = []
 
 user_rabbit, user_rabbit_palette = adafruit_imageload.load(
-    "./art/user_rabbit/neutral.bmp",
+    "art/main_user_rabbit/neutral.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -281,7 +281,7 @@ user_rabbit_sprite = displayio.TileGrid(
 )
 
 user_rabbit_bob, user_rabbit_bob_palette = adafruit_imageload.load(
-    "./art/user_rabbit/bob.bmp",
+    "art/main_user_rabbit/bob.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -292,7 +292,7 @@ user_rabbit_bob_sprite = displayio.TileGrid(
 )
 
 user_rabbit_duck, user_rabbit_duck_palette = adafruit_imageload.load(
-    "./art/user_rabbit/duck.bmp",
+    "art/main_user_rabbit/duck.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -303,7 +303,7 @@ user_rabbit_duck_sprite = displayio.TileGrid(
 )
 
 user_rabbit_back, user_rabbit_back_palette = adafruit_imageload.load(
-    "./art/user_rabbit/back.bmp",
+    "art/main_user_rabbit/back.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -314,7 +314,7 @@ user_rabbit_back_sprite = displayio.TileGrid(
 )
 
 user_rabbit_left1, user_rabbit_left1_palette = adafruit_imageload.load(
-    "./art/user_rabbit/left1.bmp",
+    "art/main_user_rabbit/left1.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -326,7 +326,7 @@ user_rabbit_left1_sprite = displayio.TileGrid(
 user_rabbits_left.append(user_rabbit_left1_sprite)
 
 user_rabbit_left2, user_rabbit_left2_palette = adafruit_imageload.load(
-    "./art/user_rabbit/left2.bmp",
+    "art/main_user_rabbit/left2.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -338,7 +338,7 @@ user_rabbit_left2_sprite = displayio.TileGrid(
 user_rabbits_left.append(user_rabbit_left2_sprite)
 
 user_rabbit_left3, user_rabbit_left3_palette = adafruit_imageload.load(
-    "./art/user_rabbit/left3.bmp",
+    "art/main_user_rabbit/left3.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -350,7 +350,7 @@ user_rabbit_left3_sprite = displayio.TileGrid(
 user_rabbits_left.append(user_rabbit_left3_sprite)
 
 user_rabbit_left4, user_rabbit_left4_palette = adafruit_imageload.load(
-    "./art/user_rabbit/left4.bmp",
+    "art/main_user_rabbit/left4.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -362,7 +362,7 @@ user_rabbit_left4_sprite = displayio.TileGrid(
 user_rabbits_left.append(user_rabbit_left4_sprite)
 
 user_rabbit_right1, user_rabbit_right1_palette = adafruit_imageload.load(
-    "./art/user_rabbit/right1.bmp",
+    "art/main_user_rabbit/right1.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -374,7 +374,7 @@ user_rabbit_right1_sprite = displayio.TileGrid(
 user_rabbits_right.append(user_rabbit_right1_sprite)
 
 user_rabbit_right2, user_rabbit_right2_palette = adafruit_imageload.load(
-    "./art/user_rabbit/right2.bmp",
+    "art/main_user_rabbit/right2.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -386,7 +386,7 @@ user_rabbit_right2_sprite = displayio.TileGrid(
 user_rabbits_right.append(user_rabbit_right2_sprite)
 
 user_rabbit_right3, user_rabbit_right3_palette = adafruit_imageload.load(
-    "./art/user_rabbit/right3.bmp",
+    "art/main_user_rabbit/right3.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -398,7 +398,7 @@ user_rabbit_right3_sprite = displayio.TileGrid(
 user_rabbits_right.append(user_rabbit_right3_sprite)
 
 user_rabbit_right4, user_rabbit_right4_palette = adafruit_imageload.load(
-    "./art/user_rabbit/right4.bmp",
+    "art/main_user_rabbit/right4.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -414,7 +414,7 @@ model_rabbits_left = []
 model_rabbits_right = []
 
 model_rabbit, model_rabbit_palette = adafruit_imageload.load(
-    "./art/model_rabbit/neutral.bmp",
+    "art/main_model_rabbit/neutral.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -425,7 +425,7 @@ model_rabbit_sprite = displayio.TileGrid(
 )
 
 model_rabbit_bob, model_rabbit_bob_palette = adafruit_imageload.load(
-    "./art/model_rabbit/bob.bmp",
+    "art/main_model_rabbit/bob.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -436,7 +436,7 @@ model_rabbit_bob_sprite = displayio.TileGrid(
 )
 
 model_rabbit_duck, model_rabbit_duck_palette = adafruit_imageload.load(
-    "./art/model_rabbit/duck.bmp",
+    "art/main_model_rabbit/duck.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -447,7 +447,7 @@ model_rabbit_duck_sprite = displayio.TileGrid(
 )
 
 model_rabbit_back, model_rabbit_back_palette = adafruit_imageload.load(
-    "./art/model_rabbit/back.bmp",
+    "art/main_model_rabbit/back.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -458,7 +458,7 @@ model_rabbit_back_sprite = displayio.TileGrid(
 )
 
 model_rabbit_left1, model_rabbit_left1_palette = adafruit_imageload.load(
-    "./art/model_rabbit/left1.bmp",
+    "art/main_model_rabbit/left1.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -470,7 +470,7 @@ model_rabbit_left1_sprite = displayio.TileGrid(
 model_rabbits_left.append(model_rabbit_left1_sprite)
 
 model_rabbit_left2, model_rabbit_left2_palette = adafruit_imageload.load(
-    "./art/model_rabbit/left2.bmp",
+    "art/main_model_rabbit/left2.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -482,7 +482,7 @@ model_rabbit_left2_sprite = displayio.TileGrid(
 model_rabbits_left.append(model_rabbit_left2_sprite)
 
 model_rabbit_left3, model_rabbit_left3_palette = adafruit_imageload.load(
-    "./art/model_rabbit/left3.bmp",
+    "art/main_model_rabbit/left3.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -494,7 +494,7 @@ model_rabbit_left3_sprite = displayio.TileGrid(
 model_rabbits_left.append(model_rabbit_left3_sprite)
 
 model_rabbit_left4, model_rabbit_left4_palette = adafruit_imageload.load(
-    "./art/model_rabbit/left4.bmp",
+    "art/main_model_rabbit/left4.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -506,7 +506,7 @@ model_rabbit_left4_sprite = displayio.TileGrid(
 model_rabbits_left.append(model_rabbit_left4_sprite)
 
 model_rabbit_right1, model_rabbit_right1_palette = adafruit_imageload.load(
-    "./art/model_rabbit/right1.bmp",
+    "art/main_model_rabbit/right1.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -518,7 +518,7 @@ model_rabbit_right1_sprite = displayio.TileGrid(
 model_rabbits_right.append(model_rabbit_right1_sprite)
 
 model_rabbit_right2, model_rabbit_right2_palette = adafruit_imageload.load(
-    "./art/model_rabbit/right2.bmp",
+    "art/main_model_rabbit/right2.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -530,7 +530,7 @@ model_rabbit_right2_sprite = displayio.TileGrid(
 model_rabbits_right.append(model_rabbit_right2_sprite)
 
 model_rabbit_right3, model_rabbit_right3_palette = adafruit_imageload.load(
-    "./art/model_rabbit/right3.bmp",
+    "art/main_model_rabbit/right3.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -542,7 +542,7 @@ model_rabbit_right3_sprite = displayio.TileGrid(
 model_rabbits_right.append(model_rabbit_right3_sprite)
 
 model_rabbit_right4, model_rabbit_right4_palette = adafruit_imageload.load(
-    "./art/model_rabbit/right4.bmp",
+    "art/main_model_rabbit/right4.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )

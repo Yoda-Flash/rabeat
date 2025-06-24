@@ -50,20 +50,20 @@ If the pose is towards the right, press:
     </summary>
 
 ### Left Poses
-![left1.bmp](./art/user_rabbit/left1.bmp)
-![left2.bmp](./art/user_rabbit/left2.bmp)
-![left3.bmp](./art/user_rabbit/left3.bmp)
-![left4.bmp](./art/user_rabbit/left4.bmp)
+![left1.bmp](art/main_user_rabbit/left1.bmp)
+![left2.bmp](art/main_user_rabbit/left2.bmp)
+![left3.bmp](art/main_user_rabbit/left3.bmp)
+![left4.bmp](art/main_user_rabbit/left4.bmp)
 
 ### Right Poses
-![right1.bmp](./art/user_rabbit/right1.bmp)
-![right2.bmp](./art/user_rabbit/right2.bmp)
-![right3.bmp](./art/user_rabbit/right3.bmp)
-![right4.bmp](./art/user_rabbit/right4.bmp)
+![right1.bmp](art/main_user_rabbit/right1.bmp)
+![right2.bmp](art/main_user_rabbit/right2.bmp)
+![right3.bmp](art/main_user_rabbit/right3.bmp)
+![right4.bmp](art/main_user_rabbit/right4.bmp)
 
 ### Neutral Poses
-![back.bmp](./art/user_rabbit/back.bmp)
-![duck.bmp](./art/user_rabbit/duck.bmp)
+![back.bmp](art/main_user_rabbit/back.bmp)
+![duck.bmp](art/main_user_rabbit/duck.bmp)
 </details>
 
 If the player clicks a button in the correct direction, depending on the timing, it will be rated as Perfect, Great, Good or Miss.

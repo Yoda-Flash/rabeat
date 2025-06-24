@@ -9,7 +9,25 @@ pygame.init()
 
 display = PyGameDisplay(width=128, height=128)
 
-# Background setup
+# Screen settings
+set_home_screen = True
+set_difficulty_screen = False
+set_menu_screen = False
+set_game_screen = False
+set_stage_complete_screen = False
+set_how_to_play_screen = False
+level = "easy"
+
+# Music settings
+music_loaded = False
+song_pos = 0
+song_bpm = 120
+song_pos_offset = 0
+
+def getFilenameFromPath(path):
+    return os.path.splitext(os.path.basename(path))[0]
+
+# Backgrounds setup
 backgrounds = {}
 
 for entry in os.scandir("./art/backgrounds"):
@@ -19,41 +37,30 @@ for entry in os.scandir("./art/backgrounds"):
             background,
             pixel_shader=background.pixel_shader
         )
-        # Get the filename of the bmp file without the extension
-        background_filename = os.path.splitext(os.path.basename(entry.path))[0]
-        backgrounds[background_filename] = background_sprite
+        backgrounds[getFilenameFromPath(entry.path)] = background_sprite
 
-print(backgrounds)
-
-# image, image_palette = adafruit_imageload.load(
-#     "./art/background.bmp",
-#     bitmap=displayio.Bitmap,
-#     palette=displayio.Palette
-# )
-# image_palette.make_transparent(0)
-# image_sprite = displayio.TileGrid(
-#     image,
-#     pixel_shader=image_palette
-# )
-
+# Home Screen Setup
 home_screen = displayio.Group()
+home_screen.append(backgrounds["rabeat"])
 
-home_screen.append(backgrounds["background"])
+home_screen_sprites = {}
 
-# for entry in os.scandir("./art/words"):
-#     if entry.is_file():
-#         image, image_palette = adafruit_imageload.load(
-#             entry.path,
-#             bitmap=displayio.Bitmap,
-#             palette=displayio.Palette
-#         )
-#         image_palette.make_transparent(0)
-#         image_sprite = displayio.TileGrid(
-#             image,
-#             pixel_shader=image_palette
-#         )
-#         test_screen.append(image_sprite)
-#         images.append(image_sprite)
+for entry in os.scandir("./art/home"):
+    if entry.is_file():
+        image, image_palette = adafruit_imageload.load(
+            entry.path,
+            bitmap=displayio.Bitmap,
+            palette=displayio.Palette
+        )
+        image_palette.make_transparent(0)
+        image_sprite = displayio.TileGrid(
+            image,
+            pixel_shader=image_palette
+        )
+        home_screen_sprites[getFilenameFromPath(entry.path)] = image_sprite
+
+for sprite in home_screen_sprites.values():
+    home_screen.append(sprite)
 
 while True:
     for event in pygame.event.get():
