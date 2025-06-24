@@ -1319,7 +1319,7 @@ def change_score(rating):
         current_score = 0
 
 def restart():
-    global current_score, percentage_score, perfects, greats, goods, misses, music_loaded
+    global rating_on, current_score, percentage_score, perfects, greats, goods, misses, music_loaded
     current_score = 0
     percentage_score = 0
     perfects = 0
@@ -1327,6 +1327,7 @@ def restart():
     goods = 0
     misses = 0
     music_loaded = False
+    rating_on = False
 
     i = 0
     while i <= 3:
@@ -1338,6 +1339,10 @@ def restart():
     while i <= 12:
         game_screen[-13 + i].hidden = True
         i += 1
+    i = 0
+    while i <= 12:
+        stage_complete_screen[-13 + i].hidden = True
+        i += 1
     game_screen[26].hidden = True
     game_screen[27].hidden = True
     game_screen[28].hidden = True
@@ -1345,6 +1350,8 @@ def restart():
     game_screen[32].hidden = True
     game_screen[30].hidden = True
     game_screen[31].hidden = True
+    game_screen[1].hidden = False
+    game_screen[2].hidden = False
 
 
 # Game loop and controls
@@ -1426,31 +1433,36 @@ while True:
             game_screen[31].hidden = True
             game_screen[32].hidden = False
 
-        if any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 200) for timestamp in model_level_left):
+        if any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 150) for timestamp in model_level_left):
+            game_screen[2].hidden = True
+            game_screen[25].hidden = True
+
             if random_pose_index_timer == 0:
                 random_pose_index = randint(0, 3)
                 random_pose_index_timer += 1
-            game_screen[2].hidden = True
             game_screen[model_left_pose_index[random_pose_index]].hidden = False
             if song_pos % 500 <= 50:
                 game_screen[1].hidden = True
                 if not rating_on:
                     game_screen[24].hidden = False
-        elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 200) for timestamp in model_level_right):
+        elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 150) for timestamp in model_level_right):
+            game_screen[2].hidden = True
+            game_screen[25].hidden = True
+
             if random_pose_index_timer == 0:
                 random_pose_index = randint(0, 3)
                 random_pose_index_timer += 1
-            game_screen[2].hidden = True
             game_screen[model_right_pose_index[random_pose_index]].hidden = False
             if song_pos % 500 <= 50:
                 game_screen[1].hidden = True
                 if not rating_on:
                     game_screen[24].hidden = False
-        elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 200) for timestamp in model_level_neutral):
+        elif any(abs(song_pos - timestamp) <= 20 or (0 <= (song_pos - timestamp) < 150) for timestamp in model_level_neutral):
+            game_screen[2].hidden = True
+            game_screen[25].hidden = True
             if random_pose_index_timer == 0:
                 random_pose_index = randint(0, 3)
                 random_pose_index_timer += 1
-            game_screen[2].hidden = True
             game_screen[model_neutral_pose_index[int(random_pose_index/2)]].hidden = False
             if song_pos % 500 <= 50:
                 game_screen[1].hidden = True
@@ -1458,28 +1470,28 @@ while True:
                     game_screen[24].hidden = False
         elif song_pos % 500 <= 50:
             game_screen[2].hidden = True
-            game_screen[25].hidden = False
             game_screen[1].hidden = True
-            if not rating_on:
-                game_screen[24].hidden = False
             i = 0
             while i <= 3:
                 game_screen[model_left_pose_index[i]].hidden = True
                 game_screen[model_right_pose_index[i]].hidden = True
                 game_screen[model_neutral_pose_index[int(i / 2)]].hidden = True
                 i += 1
+            game_screen[25].hidden = False
+            if not rating_on:
+                game_screen[24].hidden = False
         else:
             game_screen[24].hidden = True
             game_screen[25].hidden = True
-            if not rating_on:
-                game_screen[1].hidden = False
-            game_screen[2].hidden = False
             i = 0
             while i <= 3:
                 game_screen[model_left_pose_index[i]].hidden = True
                 game_screen[model_right_pose_index[i]].hidden = True
                 game_screen[model_neutral_pose_index[int(i / 2)]].hidden = True
                 i += 1
+            if not rating_on:
+                game_screen[1].hidden = False
+            game_screen[2].hidden = False
         if not rating_on and not user_lock:
             if keys[pygame.K_UP] or keys[pygame.K_2]:
                 if any(abs(song_pos - timestamp) <= 150 for timestamp in user_level_neutral):
