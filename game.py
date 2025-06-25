@@ -97,7 +97,7 @@ hard_sprite = displayio.TileGrid(
 
 # Scoreboard inits
 scoreboard, scoreboard_palette = adafruit_imageload.load(
-    "./art/in_game_scores/scoreboard.bmp",
+    "art/game/scoreboard.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -110,7 +110,7 @@ scoreboard_sprite = displayio.TileGrid(
 in_game_score_sprites = []
 
 in_game_score0, in_game_score0_palette = adafruit_imageload.load(
-    "./art/in_game_scores/0.bmp",
+    "art/game/scores/0.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -122,7 +122,7 @@ in_game_score0_sprite = displayio.TileGrid(
 in_game_score_sprites.append(in_game_score0_sprite)
 
 in_game_score1, in_game_score1_palette = adafruit_imageload.load(
-    "./art/in_game_scores/1.bmp",
+    "art/game/scores/1.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -134,7 +134,7 @@ in_game_score1_sprite = displayio.TileGrid(
 in_game_score_sprites.append(in_game_score1_sprite)
 
 in_game_score2, in_game_score2_palette = adafruit_imageload.load(
-    "./art/in_game_scores/2.bmp",
+    "art/game/scores/2.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -146,7 +146,7 @@ in_game_score2_sprite = displayio.TileGrid(
 in_game_score_sprites.append(in_game_score2_sprite)
 
 in_game_score3, in_game_score3_palette = adafruit_imageload.load(
-    "./art/in_game_scores/3.bmp",
+    "art/game/scores/3.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -158,7 +158,7 @@ in_game_score3_sprite = displayio.TileGrid(
 in_game_score_sprites.append(in_game_score3_sprite)
 
 in_game_score4, in_game_score4_palette = adafruit_imageload.load(
-    "./art/in_game_scores/4.bmp",
+    "art/game/scores/4.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -170,7 +170,7 @@ in_game_score4_sprite = displayio.TileGrid(
 in_game_score_sprites.append(in_game_score4_sprite)
 
 in_game_score5, in_game_score5_palette = adafruit_imageload.load(
-    "./art/in_game_scores/5.bmp",
+    "art/game/scores/5.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -182,7 +182,7 @@ in_game_score5_sprite = displayio.TileGrid(
 in_game_score_sprites.append(in_game_score5_sprite)
 
 in_game_score6, in_game_score6_palette = adafruit_imageload.load(
-    "./art/in_game_scores/6.bmp",
+    "art/game/scores/6.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -194,7 +194,7 @@ in_game_score6_sprite = displayio.TileGrid(
 in_game_score_sprites.append(in_game_score6_sprite)
 
 in_game_score7, in_game_score7_palette = adafruit_imageload.load(
-    "./art/in_game_scores/7.bmp",
+    "art/game/scores/7.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -206,7 +206,7 @@ in_game_score7_sprite = displayio.TileGrid(
 in_game_score_sprites.append(in_game_score7_sprite)
 
 in_game_score8, in_game_score8_palette = adafruit_imageload.load(
-    "./art/in_game_scores/8.bmp",
+    "art/game/scores/8.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -218,7 +218,7 @@ in_game_score8_sprite = displayio.TileGrid(
 in_game_score_sprites.append(in_game_score8_sprite)
 
 in_game_score9, in_game_score9_palette = adafruit_imageload.load(
-    "./art/in_game_scores/9.bmp",
+    "art/game/scores/9.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -230,7 +230,7 @@ in_game_score9_sprite = displayio.TileGrid(
 in_game_score_sprites.append(in_game_score9_sprite)
 
 in_game_score10, in_game_score10_palette = adafruit_imageload.load(
-    "./art/in_game_scores/10.bmp",
+    "art/game/scores/10.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -242,7 +242,7 @@ in_game_score10_sprite = displayio.TileGrid(
 in_game_score_sprites.append(in_game_score10_sprite)
 
 in_game_score11, in_game_score11_palette = adafruit_imageload.load(
-    "./art/in_game_scores/11.bmp",
+    "art/game/scores/11.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -254,7 +254,7 @@ in_game_score11_sprite = displayio.TileGrid(
 in_game_score_sprites.append(in_game_score11_sprite)
 
 in_game_score12, in_game_score12_palette = adafruit_imageload.load(
-    "./art/in_game_scores/12.bmp",
+    "art/game/scores/12.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -555,7 +555,7 @@ model_rabbits_right.append(model_rabbit_right4_sprite)
 
 beat_signs = []
 beat_signs1, beat_signs1_palette = adafruit_imageload.load(
-    "./art/beat_signs/1.bmp",
+    "art/game/beat_signs/beat_1.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -567,7 +567,7 @@ beat_signs1_sprite = displayio.TileGrid(
 beat_signs.append(beat_signs1_sprite)
 
 beat_signs2, beat_signs2_palette = adafruit_imageload.load(
-    "./art/beat_signs/2.bmp",
+    "art/game/beat_signs/2.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -579,7 +579,7 @@ beat_signs2_sprite = displayio.TileGrid(
 beat_signs.append(beat_signs2_sprite)
 
 beat_signs3, beat_signs3_palette = adafruit_imageload.load(
-    "./art/beat_signs/3.bmp",
+    "art/game/beat_signs/3.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -848,7 +848,7 @@ confetti4_sprite = displayio.TileGrid(
 confetti.append(confetti4_sprite)
 
 miss, miss_palette = adafruit_imageload.load(
-    "./art/words/miss.bmp",
+    "art/game/words/miss.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -859,7 +859,7 @@ miss_sprite = displayio.TileGrid(
 )
 
 good, good_palette = adafruit_imageload.load(
-    "./art/words/good.bmp",
+    "art/game/words/good.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -870,7 +870,7 @@ good_sprite = displayio.TileGrid(
 )
 
 great, great_palette = adafruit_imageload.load(
-    "./art/words/great.bmp",
+    "art/game/words/great.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -881,7 +881,7 @@ great_sprite = displayio.TileGrid(
 )
 
 perfect, perfect_palette = adafruit_imageload.load(
-    "./art/words/perfect.bmp",
+    "art/game/words/perfect.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
