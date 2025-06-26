@@ -156,6 +156,24 @@ for sprite in sprites["menu"]:
 menu_screen[menu_screen_names.index("options")].hidden = False
 menu_screen[menu_screen_names.index("back_to_game")].hidden = False
 
+# How to play screen setup
+how_to_play_screen = displayio.Group()
+
+how_to_play_screen.append(backgrounds["lightened_background"])
+
+qr, qr_palette = adafruit_imageload.load(
+    "./qr.bmp",
+    bitmap=displayio.Bitmap,
+    palette=displayio.Palette
+)
+qr_palette.make_transparent(0)
+qr_sprite = displayio.TileGrid(
+    qr,
+    pixel_shader=qr_palette
+)
+
+how_to_play_screen.append(qr_sprite)
+
 def is_left_button_pressed():
     return keys[pygame.K_LEFT] or keys[pygame.K_1]
 
@@ -215,7 +233,7 @@ while True:
     if SET_HOME_SCREEN:
         display.show(home_screen)
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN or is_left_button_pressed() or is_middle_button_pressed() or is_right_button_pressed():
                 SET_DIFFICULTY_SCREEN = True
                 SET_HOME_SCREEN = False
     elif SET_DIFFICULTY_SCREEN:
@@ -255,3 +273,10 @@ while True:
 
             SET_MENU_SCREEN = False
             time.sleep(0.2)
+    elif SET_HOW_TO_PLAY_SCREEN:
+        display.show(how_to_play_screen)
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN or is_left_button_pressed() or is_middle_button_pressed() or is_right_button_pressed():
+                SET_MENU_SCREEN = True
+                SET_HOW_TO_PLAY_SCREEN = False
+                time.sleep(0.2)
