@@ -597,7 +597,7 @@ stage_complete_bg_sprite = displayio.TileGrid(
 )
 
 endgame_options, endgame_options_palette = adafruit_imageload.load(
-    "./art/menu/endgame/options.bmp",
+    "art/endgame/options.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -608,7 +608,7 @@ endgame_options_sprite = displayio.TileGrid(
 )
 
 endgame_quit, endgame_quit_palette = adafruit_imageload.load(
-    "./art/menu/endgame/quit.bmp",
+    "art/endgame/quit.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -619,7 +619,7 @@ endgame_quit_sprite = displayio.TileGrid(
 )
 
 endgame_restart, endgame_restart_palette = adafruit_imageload.load(
-    "./art/menu/endgame/restart.bmp",
+    "art/endgame/restart.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -899,7 +899,7 @@ menu_sprite = displayio.TileGrid(
 )
 
 options, options_palette = adafruit_imageload.load(
-    "./art/menu/options.bmp",
+    "art/menu/options.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )

@@ -18,7 +18,10 @@ SET_MENU_SCREEN = False
 SET_GAME_SCREEN = False
 SET_STAGE_COMPLETE_SCREEN = False
 SET_HOW_TO_PLAY_SCREEN = False
+
 LEVEL = "easy"
+MENU_OPTION = "back_to_game"
+ENDGAME_OPTION = "restart"
 
 # Music settings
 MUSIC_LOADED = False
@@ -92,6 +95,7 @@ for sprite in sprites["home"]:
 # Difficulty screen setup
 difficulty_screen = displayio.Group()
 difficulty_screen_names = []
+difficulty_options = ["easy", "normal", "hard"]
 
 difficulty_screen.append(backgrounds["lightened_background"])
 difficulty_screen_names.append("lightened_background")
@@ -124,10 +128,33 @@ for sprite in sprites["game"]:
         game_screen.append(sprites["game"][sprite])
         game_screen_names.append(sprite)
         game_screen[-1].hidden = True
-print(game_screen_names)
 game_screen[game_screen_names.index("scoreboard")].hidden = False
 game_screen[game_screen_names.index("user_neutral")].hidden = False
 game_screen[game_screen_names.index("model_neutral")].hidden = False
+
+# Menu screen setup
+menu_screen = displayio.Group()
+menu_screen_names = []
+menu_options = ["back_to_game", "restart", "how_to_play", "difficulty", "quit"]
+
+menu_screen.append(backgrounds["menu"])
+menu_screen_names.append("menu")
+
+create_sprites_for_directory("./art/menu")
+
+# Move "options" to the start of the sprites["menu"] so the layer will be first
+unordered_menu = sprites["menu"]
+ordered_menu = {}
+ordered_menu["options"] = unordered_menu["options"]
+unordered_menu.pop("options")
+sprites["menu"] = ordered_menu | unordered_menu
+
+for sprite in sprites["menu"]:
+    menu_screen.append(sprites["menu"][sprite])
+    menu_screen_names.append(sprite)
+    menu_screen[-1].hidden = True
+menu_screen[menu_screen_names.index("options")].hidden = False
+menu_screen[menu_screen_names.index("back_to_game")].hidden = False
 
 def is_left_button_pressed():
     return keys[pygame.K_LEFT] or keys[pygame.K_1]
@@ -137,27 +164,36 @@ def is_middle_button_pressed():
 
 def is_right_button_pressed():
     return keys[pygame.K_RIGHT] or keys[pygame.K_3]
+
+def is_two_buttons_pressed():
+    return (is_left_button_pressed() + is_middle_button_pressed() + is_right_button_pressed()) >= 2
+
 def load_music(level_difficulty, offset):
     pass
 
+def next_option(current_option, options):
+    current_index = options.index(current_option)
+    if current_index == (len(options) - 1):
+        return options[0]
+    else:
+        return options[current_index + 1]
+
 def change_difficulty(level_difficulty):
-    if level_difficulty == "easy":
-        difficulty_screen[difficulty_screen_names.index("easy")].hidden = True
-        difficulty_screen[difficulty_screen_names.index("normal")].hidden = False
-        level_difficulty = "normal"
-    elif level_difficulty == "normal":
-        difficulty_screen[difficulty_screen_names.index("normal")].hidden = True
-        difficulty_screen[difficulty_screen_names.index("hard")].hidden = False
-        level_difficulty = "hard"
-    elif level_difficulty == "hard":
-        difficulty_screen[difficulty_screen_names.index("hard")].hidden = True
-        difficulty_screen[difficulty_screen_names.index("easy")].hidden = False
-        level_difficulty = "easy"
+    difficulty_screen[difficulty_screen_names.index(level_difficulty)].hidden = True
+    level_difficulty = next_option(level_difficulty, difficulty_options)
+    difficulty_screen[difficulty_screen_names.index(level_difficulty)].hidden = False
     time.sleep(0.15)
     return level_difficulty
 
+
+
 def change_menu_option(option):
-    pass
+    menu_screen[menu_screen_names.index(option)].hidden = True
+    option = next_option(option, menu_options)
+    menu_screen[menu_screen_names.index(option)].hidden = False
+    time.sleep(0.15)
+    return option
+
 
 def change_endgame_option(option):
     pass
@@ -194,3 +230,28 @@ while True:
             time.sleep(0.5)
     elif SET_GAME_SCREEN:
         display.show(game_screen)
+        if is_two_buttons_pressed():
+            SET_MENU_SCREEN = True
+            SET_GAME_SCREEN = False
+            time.sleep(0.2)
+    elif SET_MENU_SCREEN:
+        display.show(menu_screen)
+        time.sleep(0.05)
+        if keys[pygame.K_SPACE] or is_middle_button_pressed():
+            MENU_OPTION = change_menu_option(MENU_OPTION)
+        if keys[pygame.K_RETURN] or is_right_button_pressed():
+            if MENU_OPTION == "back_to_game":
+                SET_GAME_SCREEN = True
+            elif MENU_OPTION == "restart":
+                restart()
+                SET_GAME_SCREEN = True
+            elif MENU_OPTION == "how_to_play":
+                SET_HOW_TO_PLAY_SCREEN = True
+            elif MENU_OPTION == "difficulty":
+                SET_DIFFICULTY_SCREEN = True
+            elif MENU_OPTION == "quit":
+                restart()
+                SET_HOME_SCREEN = True
+
+            SET_MENU_SCREEN = False
+            time.sleep(0.2)
