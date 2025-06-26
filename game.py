@@ -567,7 +567,7 @@ beat_signs1_sprite = displayio.TileGrid(
 beat_signs.append(beat_signs1_sprite)
 
 beat_signs2, beat_signs2_palette = adafruit_imageload.load(
-    "art/game/beat_signs/2.bmp",
+    "art/game/beat_signs/beat_2.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -579,7 +579,7 @@ beat_signs2_sprite = displayio.TileGrid(
 beat_signs.append(beat_signs2_sprite)
 
 beat_signs3, beat_signs3_palette = adafruit_imageload.load(
-    "art/game/beat_signs/3.bmp",
+    "art/game/beat_signs/beat_3.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )

@@ -48,7 +48,6 @@ def create_sprites_for_directory(directory, parent_dirname=""):
                 image,
                 pixel_shader=image_palette
             )
-
             if parent_dirname != "":
                 subdirname = get_dirname_from_directory(entry.path)
                 if parent_dirname not in sprites:
@@ -127,8 +126,8 @@ for sprite in sprites["game"]:
         game_screen[-1].hidden = True
 print(game_screen_names)
 game_screen[game_screen_names.index("scoreboard")].hidden = False
-# game_screen[game_screen_names.index("user_neutral")].hidden = False
-# game_screen[game_screen_names.index("model_neutral")].hidden = False
+game_screen[game_screen_names.index("user_neutral")].hidden = False
+game_screen[game_screen_names.index("model_neutral")].hidden = False
 
 def is_left_button_pressed():
     return keys[pygame.K_LEFT] or keys[pygame.K_1]
