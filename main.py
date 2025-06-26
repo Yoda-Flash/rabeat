@@ -29,6 +29,19 @@ SONG_POS = 0
 SONG_BPM = 120
 SONG_POS_OFFSET = 0
 
+# Score settings
+USER_LOCK = False
+RATING_ON = False
+NUM_SONG_TIMESTAMPS = 0
+CURRENT_SCORE = 0
+PERCENTAGE_SCORE = 0
+PERFECTS = 0
+GREATS = 0
+GOODS = 0
+MISSES = 0
+
+CONFETTI_TIMER = 0
+
 # Create master sprites dictionary
 sprites = {}
 
@@ -186,8 +199,21 @@ def is_right_button_pressed():
 def is_two_buttons_pressed():
     return (is_left_button_pressed() + is_middle_button_pressed() + is_right_button_pressed()) >= 2
 
+def is_any_button_pressed():
+    return is_left_button_pressed() or is_middle_button_pressed() or is_right_button_pressed()
+
 def load_music(level_difficulty, offset):
-    pass
+    match level_difficulty:
+        case "easy":
+            pygame.mixer.music.load("./music/take_a_stab.mp3")
+            offset = 100
+        case "normal":
+            pygame.mixer.music.load("./music/copycat_curry.mp3")
+            offset = 100
+        case "hard":
+            pygame.mixer.music.load("./music/time_to_shine.mp3")
+    return True, offset
+
 
 def next_option(current_option, options):
     current_index = options.index(current_option)
@@ -233,7 +259,7 @@ while True:
     if SET_HOME_SCREEN:
         display.show(home_screen)
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN or is_left_button_pressed() or is_middle_button_pressed() or is_right_button_pressed():
+            if event.type == pygame.KEYDOWN or is_any_button_pressed():
                 SET_DIFFICULTY_SCREEN = True
                 SET_HOME_SCREEN = False
     elif SET_DIFFICULTY_SCREEN:
@@ -248,11 +274,22 @@ while True:
             time.sleep(0.5)
     elif SET_GAME_SCREEN:
         display.show(game_screen)
+
+        if not MUSIC_LOADED:
+            MUSIC_LOADED, SONG_POS_OFFSET = load_music(LEVEL, SONG_POS_OFFSET)
+            pygame.mixer.music.play(loops=0)
+
         if is_two_buttons_pressed():
             SET_MENU_SCREEN = True
             SET_GAME_SCREEN = False
             time.sleep(0.2)
+
+        if is_any_button_pressed():
+            USER_LOCK = True
+        else:
+            USER_LOCK = False
     elif SET_MENU_SCREEN:
+        pygame.mixer.music.pause()
         display.show(menu_screen)
         time.sleep(0.05)
         if keys[pygame.K_SPACE] or is_middle_button_pressed():
@@ -276,7 +313,7 @@ while True:
     elif SET_HOW_TO_PLAY_SCREEN:
         display.show(how_to_play_screen)
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN or is_left_button_pressed() or is_middle_button_pressed() or is_right_button_pressed():
+            if event.type == pygame.KEYDOWN or is_any_button_pressed():
                 SET_MENU_SCREEN = True
                 SET_HOW_TO_PLAY_SCREEN = False
                 time.sleep(0.2)
