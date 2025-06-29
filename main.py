@@ -1,5 +1,6 @@
 import os
 import time
+from random import randint
 
 import adafruit_imageload
 import displayio
@@ -41,6 +42,48 @@ GOODS = 0
 MISSES = 0
 
 CONFETTI_TIMER = 0
+
+SET_MODEL_TIMESTAMPS = {
+    "easy": {
+        "neutral": [12000, 21000, 33000],
+        "left": [4000, 16000, 19000, 25000, 37000],
+        "right": [8000, 27000, 35000],
+        "random": [23000, 29000, 31000]
+    }, "normal": {
+        "neutral": [5500, 13500, 28500, 41500, 47500],
+        "left": [9500, 24500, 40500],
+        "right": [17500, 30500, 37000, 47000],
+        "random": [22500, 26500, 32500, 36500, 41000, 44500, 45500, 46500]
+    }, "hard": {
+        "neutral": [7000, 16800, 31000, 35350, 40500, 42000],
+        "left": [5000, 16400, 23000, 39000],
+        "right": [9000, 15000, 23350, 42500],
+        "random": [8000, 16000, 27000, 27350, 31350, 35000, 40000, 41000]
+    }
+}
+
+SET_USER_TIMESTAMPS = {
+    "easy": {
+        "neutral": [14000, 22000, 34000],
+        "left": [6000, 18000, 20000, 26000, 38000],
+        "right": [10000, 28000, 36000],
+        "random": [24000, 30000, 32000]
+    }, "normal": {
+        "neutral": [7500, 15500, 29500, 43500, 51500],
+        "left": [11500, 25500, 42500],
+        "right": [19500, 31500, 39000, 51000],
+        "random": [23500, 27500, 33500, 38500, 43000, 48500, 49500, 50500]
+    }, "hard": {
+        "neutral": [11000, 20800, 33000, 37350, 44500, 46000],
+        "left": [6000, 20400, 25000, 43000],
+        "right": [13000, 19000, 25350, 46500],
+        "random": [12000, 20000, 29000, 29350, 33350, 37000, 44000, 45000]
+    }
+}
+
+RANDOMIZED_MODEL_TIMESTAMPS = {}
+RANDOMIZED_USER_TIMESTAMPS = {}
+ALL_USER_LEVEL_TIMESTAMPS = []
 
 # Create master sprites dictionary
 sprites = {}
@@ -214,6 +257,27 @@ def load_music(level_difficulty, offset):
             pygame.mixer.music.load("./music/time_to_shine.mp3")
     return True, offset
 
+def set_poses(level_difficulty):
+    global RANDOMIZED_MODEL_TIMESTAMPS, RANDOMIZED_USER_TIMESTAMPS, ALL_USER_LEVEL_TIMESTAMPS
+    RANDOMIZED_MODEL_TIMESTAMPS = SET_MODEL_TIMESTAMPS[level_difficulty]
+    RANDOMIZED_USER_TIMESTAMPS = SET_USER_TIMESTAMPS[level_difficulty]
+    for timestamps in RANDOMIZED_USER_TIMESTAMPS.values():
+        ALL_USER_LEVEL_TIMESTAMPS.extend(timestamps)
+
+def distribute_randoms(level_difficulty):
+    index = 0
+    for timestamp in SET_MODEL_TIMESTAMPS[level_difficulty]["random"]:
+        direction = randint(0, 1)
+        if direction == 0:
+            RANDOMIZED_MODEL_TIMESTAMPS["left"].append(timestamp)
+            RANDOMIZED_USER_TIMESTAMPS["left"].append(SET_USER_TIMESTAMPS[level_difficulty]["random"][index])
+        elif direction == 1:
+            RANDOMIZED_MODEL_TIMESTAMPS["right"].append(timestamp)
+            RANDOMIZED_USER_TIMESTAMPS["right"].append(SET_USER_TIMESTAMPS[level_difficulty]["random"][index])
+        index += 1
+def set_num_timestamps():
+    global NUM_SONG_TIMESTAMPS
+    NUM_SONG_TIMESTAMPS = len(RANDOMIZED_MODEL_TIMESTAMPS["neutral"]) + len(RANDOMIZED_MODEL_TIMESTAMPS["left"]) + len(RANDOMIZED_MODEL_TIMESTAMPS["right"])
 
 def next_option(current_option, options):
     current_index = options.index(current_option)
@@ -229,8 +293,6 @@ def change_difficulty(level_difficulty):
     time.sleep(0.15)
     return level_difficulty
 
-
-
 def change_menu_option(option):
     menu_screen[menu_screen_names.index(option)].hidden = True
     option = next_option(option, menu_options)
@@ -241,6 +303,24 @@ def change_menu_option(option):
 
 def change_endgame_option(option):
     pass
+
+def next_beat(beat):
+    if beat == 3:
+        return 1
+    else:
+        return beat + 1
+
+def show_beat_sign(beat=0):
+    if beat == 0:
+        game_screen[game_screen_names.index("beat_1")].hidden = True
+        game_screen[game_screen_names.index("beat_2")].hidden = True
+        game_screen[game_screen_names.index("beat_3")].hidden = True
+    else:
+        game_screen[game_screen_names.index(f"beat_{beat}")].hidden = False
+        beat = next_beat(beat)
+        game_screen[game_screen_names.index(f"beat_{beat}")].hidden = True
+        beat = next_beat(beat)
+        game_screen[game_screen_names.index(f"beat_{beat}")].hidden = True
 
 def change_score(rating):
     pass
@@ -271,13 +351,12 @@ while True:
         if keys[pygame.K_RETURN] or is_right_button_pressed():
             SET_GAME_SCREEN = True
             SET_DIFFICULTY_SCREEN = False
+            set_poses(LEVEL)
+            distribute_randoms(LEVEL)
+            set_num_timestamps()
             time.sleep(0.5)
     elif SET_GAME_SCREEN:
         display.show(game_screen)
-
-        if not MUSIC_LOADED:
-            MUSIC_LOADED, SONG_POS_OFFSET = load_music(LEVEL, SONG_POS_OFFSET)
-            pygame.mixer.music.play(loops=0)
 
         if is_two_buttons_pressed():
             SET_MENU_SCREEN = True
@@ -288,6 +367,23 @@ while True:
             USER_LOCK = True
         else:
             USER_LOCK = False
+
+        if not MUSIC_LOADED:
+            MUSIC_LOADED, SONG_POS_OFFSET = load_music(LEVEL, SONG_POS_OFFSET)
+            pygame.mixer.music.play(loops=0)
+
+        SONG_POS = pygame.mixer.music.get_pos() - SONG_POS_OFFSET
+
+        # Beat signs for user
+        if any(0 <= abs(timestamp - SONG_POS) <= 50 for timestamp in ALL_USER_LEVEL_TIMESTAMPS):
+            show_beat_sign()
+        elif any(0 <= (timestamp - SONG_POS) <= 550 for timestamp in ALL_USER_LEVEL_TIMESTAMPS):
+            show_beat_sign(1)
+        elif any(0 <= (timestamp - SONG_POS) <= 1050 for timestamp in ALL_USER_LEVEL_TIMESTAMPS):
+            show_beat_sign(2)
+        elif any(0 <= (timestamp - SONG_POS) <= 1550 for timestamp in ALL_USER_LEVEL_TIMESTAMPS):
+            show_beat_sign(3)
+
     elif SET_MENU_SCREEN:
         pygame.mixer.music.pause()
         display.show(menu_screen)
