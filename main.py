@@ -36,15 +36,12 @@ RANDOM_POSE_INDEX_TIMER = 0
 USER_LOCK = False
 RATING_ON = False
 RATING_ON_TIMER = 0
+ATTEMPTED = 0
 
 # Score settings
 NUM_SONG_TIMESTAMPS = 0
 CURRENT_SCORE = 0
 PERCENTAGE_SCORE = 0
-PERFECTS = 0
-GREATS = 0
-GOODS = 0
-MISSES = 0
 
 CONFETTI_TIMER = 0
 
@@ -420,26 +417,62 @@ def show_ratings(rating):
             game_screen[game_screen_names.index("perfect")].hidden = True
 
 def rate_keypress(direction):
-    global SONG_POS
-    if any(abs(SONG_POS - timestamp) <= 150 for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]):
-        show_ratings("perfect")
-        change_score("perfect")
-    elif any(abs(SONG_POS - timestamp) <= 200 for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]):
-        show_ratings("great")
-        change_score("great")
-    elif any(abs(SONG_POS - timestamp) <= 300 for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]):
-        show_ratings("good")
-        change_score("good")
-    else:
-        show_ratings("miss")
-        change_score("miss")
+    global SONG_POS, ATTEMPTED
+    for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]:
+        if timestamp - 300 >= ATTEMPTED:
+            print(f"Not attempted yet")
+            if abs(SONG_POS - timestamp) <= 150:
+                show_ratings("perfect")
+                change_score("perfect")
+            elif abs(SONG_POS - timestamp) <= 200:
+                show_ratings("great")
+                change_score("great")
+            elif abs(SONG_POS - timestamp) <= 300:
+                show_ratings("good")
+                change_score("good")
+            else:
+                show_ratings("miss")
+                change_score("miss")
+            ATTEMPTED = SONG_POS
+    # if any(abs(SONG_POS - timestamp) <= 150 for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]):
+    #     ATTEMPTED = SONG_POS
+    #     show_ratings("perfect")
+    #     change_score("perfect")
+    # elif any(abs(SONG_POS - timestamp) <= 200 for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]):
+    #     show_ratings("great")
+    #     change_score("great")
+    # elif any(abs(SONG_POS - timestamp) <= 300 for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]):
+    #     show_ratings("good")
+    #     change_score("good")
+    # else:
+    #     show_ratings("miss")
+    #     change_score("miss")
+
+
+def show_score(score):
+    game_screen[game_screen_names.index(score)].hidden = False
 
 def change_score(rating):
-    pass
+    global CURRENT_SCORE, PERCENTAGE_SCORE
+    match rating:
+        case "perfect":
+            PERCENTAGE_SCORE += (1/NUM_SONG_TIMESTAMPS)
+        case "great":
+            PERCENTAGE_SCORE += (0.75/NUM_SONG_TIMESTAMPS)
+        case "good":
+            PERCENTAGE_SCORE += (0.25/NUM_SONG_TIMESTAMPS)
 
 def restart():
-    global MUSIC_LOADED
+    global MUSIC_LOADED, RATING_ON
     MUSIC_LOADED = False
+    RATING_ON = False
+
+    hide_user_pose()
+    hide_model_poses()
+    game_screen[game_screen_names.index("user_bob")].hidden = True
+    game_screen[game_screen_names.index("model_bob")].hidden = True
+
+    show_beat_sign()
 
 while True:
     for event in pygame.event.get():

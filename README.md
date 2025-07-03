@@ -2,8 +2,6 @@
 
 Rabeat's goal is to be a collection of rabbit-themed rhythm games, to be played on a Tamagotchi Clone!
 
-Because rabbits are the cutest animal, in my opinion, I decided to make this game that features them!
-
 Music has always been a big part of my life, and rhythm games are my favorite games, so I decided to make a rhythm game. 
 I was also inspired by Super Mario Party's Sound Stage.
 
