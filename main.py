@@ -33,9 +33,11 @@ SONG_POS_OFFSET = 0
 RANDOM_POSE_INDEX = 0
 RANDOM_POSE_INDEX_TIMER = 0
 
-# Score settings
 USER_LOCK = False
 RATING_ON = False
+RATING_ON_TIMER = 0
+
+# Score settings
 NUM_SONG_TIMESTAMPS = 0
 CURRENT_SCORE = 0
 PERCENTAGE_SCORE = 0
@@ -332,9 +334,10 @@ def show_model_pose(direction):
     game_screen[game_screen_names.index("model_neutral")].hidden = True
     game_screen[game_screen_names.index("model_bob")].hidden = True
 
-    if RANDOM_POSE_INDEX_TIMER == 0:
-        RANDOM_POSE_INDEX = randint(1, 4)
-        RANDOM_POSE_INDEX_TIMER += 1
+    # if RANDOM_POSE_INDEX_TIMER == 0:
+    RANDOM_POSE_INDEX = randint(1, 4)
+        # RANDOM_POSE_INDEX_TIMER += 1
+
     if direction == "neutral":
         if RANDOM_POSE_INDEX % 2 == 0:
             game_screen[game_screen_names.index("model_back")].hidden = False
@@ -352,6 +355,61 @@ def hide_model_poses():
 
     game_screen[game_screen_names.index("model_back")].hidden = True
     game_screen[game_screen_names.index("model_duck")].hidden = True
+
+def show_user_pose(direction):
+    global RANDOM_POSE_INDEX_TIMER, RANDOM_POSE_INDEX
+    game_screen[game_screen_names.index("user_neutral")].hidden = True
+    game_screen[game_screen_names.index("user_bob")].hidden = True
+
+    if direction == "neutral":
+        if RANDOM_POSE_INDEX % 2 == 0:
+            game_screen[game_screen_names.index("user_back")].hidden = False
+        else:
+            game_screen[game_screen_names.index("user_duck")].hidden = False
+    else:
+        game_screen[game_screen_names.index(f"user_{direction}{RANDOM_POSE_INDEX}")].hidden = False
+
+def hide_user_pose():
+    i = 1
+    while i <= 4:
+        game_screen[game_screen_names.index(f"user_left{i}")].hidden = True
+        game_screen[game_screen_names.index(f"user_right{i}")].hidden = True
+        i += 1
+
+    game_screen[game_screen_names.index("user_back")].hidden = True
+    game_screen[game_screen_names.index("user_duck")].hidden = True
+
+def show_ratings(rating):
+    match rating:
+        case "miss":
+            game_screen[game_screen_names.index("miss")].hidden = False
+
+            game_screen[game_screen_names.index("good")].hidden = True
+            game_screen[game_screen_names.index("great")].hidden = True
+            game_screen[game_screen_names.index("perfect")].hidden = True
+        case "good":
+            game_screen[game_screen_names.index("good")].hidden = False
+
+            game_screen[game_screen_names.index("miss")].hidden = True
+            game_screen[game_screen_names.index("great")].hidden = True
+            game_screen[game_screen_names.index("perfect")].hidden = True
+        case "great":
+            game_screen[game_screen_names.index("great")].hidden = False
+
+            game_screen[game_screen_names.index("miss")].hidden = True
+            game_screen[game_screen_names.index("good")].hidden = True
+            game_screen[game_screen_names.index("perfect")].hidden = True
+        case "perfect":
+            game_screen[game_screen_names.index("perfect")].hidden = False
+
+            game_screen[game_screen_names.index("miss")].hidden = True
+            game_screen[game_screen_names.index("good")].hidden = True
+            game_screen[game_screen_names.index("great")].hidden = True
+        case "none":
+            game_screen[game_screen_names.index("miss")].hidden = True
+            game_screen[game_screen_names.index("good")].hidden = True
+            game_screen[game_screen_names.index("great")].hidden = True
+            game_screen[game_screen_names.index("perfect")].hidden = True
 
 def change_score(rating):
     pass
@@ -400,6 +458,19 @@ while True:
         else:
             USER_LOCK = False
 
+        if RATING_ON:
+            RATING_ON_TIMER += 1
+            if RATING_ON_TIMER >= 50:
+                RATING_ON_TIMER = 0
+                RATING_ON = False
+                hide_user_pose()
+                show_ratings("none")
+        #
+        # if RANDOM_POSE_INDEX_TIMER >= 1:
+        #     RANDOM_POSE_INDEX_TIMER += 1
+        #     if RANDOM_POSE_INDEX_TIMER >= 150:
+        #         RANDOM_POSE_INDEX_TIMER = 0
+
         if not MUSIC_LOADED:
             MUSIC_LOADED, SONG_POS_OFFSET = load_music(LEVEL, SONG_POS_OFFSET)
             pygame.mixer.music.play(loops=0)
@@ -435,6 +506,9 @@ while True:
             if not RATING_ON:
                 game_screen[game_screen_names.index("user_bob")].hidden = False
 
+        print(RANDOM_POSE_INDEX_TIMER)
+
+        time.sleep(0.005)
     elif SET_MENU_SCREEN:
         pygame.mixer.music.pause()
         display.show(menu_screen)

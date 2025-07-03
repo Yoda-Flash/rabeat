@@ -848,7 +848,7 @@ confetti4_sprite = displayio.TileGrid(
 confetti.append(confetti4_sprite)
 
 miss, miss_palette = adafruit_imageload.load(
-    "art/game/words/miss.bmp",
+    "art/game/ratings/miss.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -859,7 +859,7 @@ miss_sprite = displayio.TileGrid(
 )
 
 good, good_palette = adafruit_imageload.load(
-    "art/game/words/good.bmp",
+    "art/game/ratings/good.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -870,7 +870,7 @@ good_sprite = displayio.TileGrid(
 )
 
 great, great_palette = adafruit_imageload.load(
-    "art/game/words/great.bmp",
+    "art/game/ratings/great.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -881,7 +881,7 @@ great_sprite = displayio.TileGrid(
 )
 
 perfect, perfect_palette = adafruit_imageload.load(
-    "art/game/words/perfect.bmp",
+    "art/game/ratings/perfect.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
