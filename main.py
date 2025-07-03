@@ -416,37 +416,25 @@ def show_ratings(rating):
             game_screen[game_screen_names.index("great")].hidden = True
             game_screen[game_screen_names.index("perfect")].hidden = True
 
+def not_attempted(timestamp):
+    print(timestamp - ATTEMPTED)
+    return timestamp - ATTEMPTED >= 600
+
 def rate_keypress(direction):
     global SONG_POS, ATTEMPTED
-    for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]:
-        if timestamp - 300 >= ATTEMPTED:
-            print(f"Not attempted yet")
-            if abs(SONG_POS - timestamp) <= 150:
-                show_ratings("perfect")
-                change_score("perfect")
-            elif abs(SONG_POS - timestamp) <= 200:
-                show_ratings("great")
-                change_score("great")
-            elif abs(SONG_POS - timestamp) <= 300:
-                show_ratings("good")
-                change_score("good")
-            else:
-                show_ratings("miss")
-                change_score("miss")
-            ATTEMPTED = SONG_POS
-    # if any(abs(SONG_POS - timestamp) <= 150 for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]):
-    #     ATTEMPTED = SONG_POS
-    #     show_ratings("perfect")
-    #     change_score("perfect")
-    # elif any(abs(SONG_POS - timestamp) <= 200 for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]):
-    #     show_ratings("great")
-    #     change_score("great")
-    # elif any(abs(SONG_POS - timestamp) <= 300 for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]):
-    #     show_ratings("good")
-    #     change_score("good")
-    # else:
-    #     show_ratings("miss")
-    #     change_score("miss")
+    if any(abs(SONG_POS - timestamp) <= 150 and not_attempted(timestamp) for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]):
+        show_ratings("perfect")
+        change_score("perfect")
+    elif any(abs(SONG_POS - timestamp) <= 200 and not_attempted(timestamp) for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]):
+        show_ratings("great")
+        change_score("great")
+    elif any(abs(SONG_POS - timestamp) <= 300 and not_attempted(timestamp) for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]):
+        show_ratings("good")
+        change_score("good")
+    else:
+        show_ratings("miss")
+        change_score("miss")
+    ATTEMPTED = SONG_POS
 
 
 def show_score(score):
