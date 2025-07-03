@@ -334,9 +334,9 @@ def show_model_pose(direction):
     game_screen[game_screen_names.index("model_neutral")].hidden = True
     game_screen[game_screen_names.index("model_bob")].hidden = True
 
-    # if RANDOM_POSE_INDEX_TIMER == 0:
-    RANDOM_POSE_INDEX = randint(1, 4)
-        # RANDOM_POSE_INDEX_TIMER += 1
+    if RANDOM_POSE_INDEX_TIMER == 0:
+        RANDOM_POSE_INDEX = randint(1, 4)
+        RANDOM_POSE_INDEX_TIMER += 1
 
     if direction == "neutral":
         if RANDOM_POSE_INDEX % 2 == 0:
@@ -465,11 +465,11 @@ while True:
                 RATING_ON = False
                 hide_user_pose()
                 show_ratings("none")
-        #
-        # if RANDOM_POSE_INDEX_TIMER >= 1:
-        #     RANDOM_POSE_INDEX_TIMER += 1
-        #     if RANDOM_POSE_INDEX_TIMER >= 150:
-        #         RANDOM_POSE_INDEX_TIMER = 0
+
+        if RANDOM_POSE_INDEX_TIMER >= 1:
+            RANDOM_POSE_INDEX_TIMER += 1
+            if RANDOM_POSE_INDEX_TIMER >= 150:
+                RANDOM_POSE_INDEX_TIMER = 0
 
         if not MUSIC_LOADED:
             MUSIC_LOADED, SONG_POS_OFFSET = load_music(LEVEL, SONG_POS_OFFSET)
@@ -503,10 +503,12 @@ while True:
             game_screen[game_screen_names.index("model_neutral")].hidden = False
 
         if SONG_POS % 500 <= 50:
+            game_screen[game_screen_names.index("user_neutral")].hidden = True
             if not RATING_ON:
                 game_screen[game_screen_names.index("user_bob")].hidden = False
-
-        print(RANDOM_POSE_INDEX_TIMER)
+        else:
+            game_screen[game_screen_names.index("user_neutral")].hidden = False
+            game_screen[game_screen_names.index("user_bob")].hidden = True
 
         time.sleep(0.005)
     elif SET_MENU_SCREEN:
