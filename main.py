@@ -380,37 +380,34 @@ def hide_user_pose():
     game_screen[game_screen_names.index("user_duck")].hidden = True
 
 def show_ratings(rating):
+    global RATING_ON
+    RATING_ON = True
     match rating:
         case "miss":
-            print("Show miss")
             game_screen[game_screen_names.index("miss")].hidden = False
 
             game_screen[game_screen_names.index("good")].hidden = True
             game_screen[game_screen_names.index("great")].hidden = True
             game_screen[game_screen_names.index("perfect")].hidden = True
         case "good":
-            print("Show good")
             game_screen[game_screen_names.index("good")].hidden = False
 
             game_screen[game_screen_names.index("miss")].hidden = True
             game_screen[game_screen_names.index("great")].hidden = True
             game_screen[game_screen_names.index("perfect")].hidden = True
         case "great":
-            print("Show great")
             game_screen[game_screen_names.index("great")].hidden = False
 
             game_screen[game_screen_names.index("miss")].hidden = True
             game_screen[game_screen_names.index("good")].hidden = True
             game_screen[game_screen_names.index("perfect")].hidden = True
         case "perfect":
-            print("Show perfect")
             game_screen[game_screen_names.index("perfect")].hidden = False
 
             game_screen[game_screen_names.index("miss")].hidden = True
             game_screen[game_screen_names.index("good")].hidden = True
             game_screen[game_screen_names.index("great")].hidden = True
         case "none":
-            print("No rating")
             game_screen[game_screen_names.index("miss")].hidden = True
             game_screen[game_screen_names.index("good")].hidden = True
             game_screen[game_screen_names.index("great")].hidden = True
@@ -418,21 +415,16 @@ def show_ratings(rating):
 
 def rate_keypress(direction):
     global SONG_POS
-    print(f"Rate keypress called with {direction}")
     if any(abs(SONG_POS - timestamp) <= 150 for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]):
-        print(f"Showing perfect rating for {direction}")
         show_ratings("perfect")
         change_score("perfect")
     elif any(abs(SONG_POS - timestamp) <= 200 for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]):
-        print(f"Showing great rating for {direction}")
         show_ratings("great")
         change_score("great")
     elif any(abs(SONG_POS - timestamp) <= 300 for timestamp in RANDOMIZED_USER_TIMESTAMPS[direction]):
-        print(f"Showing good rating for {direction}")
         show_ratings("good")
         change_score("good")
     else:
-        print(f"Showing miss rating for {direction}")
         show_ratings("miss")
         change_score("miss")
 
@@ -481,10 +473,10 @@ while True:
         if RATING_ON:
             RATING_ON_TIMER += 1
             if RATING_ON_TIMER >= 50:
-                RATING_ON_TIMER = 0
-                RATING_ON = False
                 hide_user_pose()
                 show_ratings("none")
+                RATING_ON_TIMER = 0
+                RATING_ON = False
 
         if RANDOM_POSE_INDEX_TIMER >= 1:
             RANDOM_POSE_INDEX_TIMER += 1
@@ -553,6 +545,7 @@ while True:
         if keys[pygame.K_RETURN] or is_right_button_pressed():
             if MENU_OPTION == "back_to_game":
                 SET_GAME_SCREEN = True
+                pygame.mixer.music.unpause()
             elif MENU_OPTION == "restart":
                 restart()
                 SET_GAME_SCREEN = True
