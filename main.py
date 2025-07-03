@@ -30,6 +30,9 @@ SONG_POS = 0
 SONG_BPM = 120
 SONG_POS_OFFSET = 0
 
+RANDOM_POSE_INDEX = 0
+RANDOM_POSE_INDEX_TIMER = 0
+
 # Score settings
 USER_LOCK = False
 RATING_ON = False
@@ -261,6 +264,7 @@ def set_poses(level_difficulty):
     global RANDOMIZED_MODEL_TIMESTAMPS, RANDOMIZED_USER_TIMESTAMPS, ALL_USER_LEVEL_TIMESTAMPS
     RANDOMIZED_MODEL_TIMESTAMPS = SET_MODEL_TIMESTAMPS[level_difficulty]
     RANDOMIZED_USER_TIMESTAMPS = SET_USER_TIMESTAMPS[level_difficulty]
+    ALL_USER_LEVEL_TIMESTAMPS = []
     for timestamps in RANDOMIZED_USER_TIMESTAMPS.values():
         ALL_USER_LEVEL_TIMESTAMPS.extend(timestamps)
 
@@ -275,6 +279,7 @@ def distribute_randoms(level_difficulty):
             RANDOMIZED_MODEL_TIMESTAMPS["right"].append(timestamp)
             RANDOMIZED_USER_TIMESTAMPS["right"].append(SET_USER_TIMESTAMPS[level_difficulty]["random"][index])
         index += 1
+
 def set_num_timestamps():
     global NUM_SONG_TIMESTAMPS
     NUM_SONG_TIMESTAMPS = len(RANDOMIZED_MODEL_TIMESTAMPS["neutral"]) + len(RANDOMIZED_MODEL_TIMESTAMPS["left"]) + len(RANDOMIZED_MODEL_TIMESTAMPS["right"])
@@ -322,11 +327,38 @@ def show_beat_sign(beat=0):
         beat = next_beat(beat)
         game_screen[game_screen_names.index(f"beat_{beat}")].hidden = True
 
+def show_model_pose(direction):
+    global RANDOM_POSE_INDEX_TIMER, RANDOM_POSE_INDEX
+    game_screen[game_screen_names.index("model_neutral")].hidden = True
+    game_screen[game_screen_names.index("model_bob")].hidden = True
+
+    if RANDOM_POSE_INDEX_TIMER == 0:
+        RANDOM_POSE_INDEX = randint(1, 4)
+        RANDOM_POSE_INDEX_TIMER += 1
+    if direction == "neutral":
+        if RANDOM_POSE_INDEX % 2 == 0:
+            game_screen[game_screen_names.index("model_back")].hidden = False
+        else:
+            game_screen[game_screen_names.index("model_duck")].hidden = False
+    else:
+        game_screen[game_screen_names.index(f"model_{direction}{RANDOM_POSE_INDEX}")].hidden = False
+
+def hide_model_poses():
+    i = 1
+    while i <= 4:
+        game_screen[game_screen_names.index(f"model_left{i}")].hidden = True
+        game_screen[game_screen_names.index(f"model_right{i}")].hidden = True
+        i += 1
+
+    game_screen[game_screen_names.index("model_back")].hidden = True
+    game_screen[game_screen_names.index("model_duck")].hidden = True
+
 def change_score(rating):
     pass
 
 def restart():
-    pass
+    global MUSIC_LOADED
+    MUSIC_LOADED = False
 
 while True:
     for event in pygame.event.get():
@@ -375,7 +407,7 @@ while True:
         SONG_POS = pygame.mixer.music.get_pos() - SONG_POS_OFFSET
 
         # Beat signs for user
-        if any(0 <= abs(timestamp - SONG_POS) <= 50 for timestamp in ALL_USER_LEVEL_TIMESTAMPS):
+        if any(abs(timestamp - SONG_POS) <= 50 for timestamp in ALL_USER_LEVEL_TIMESTAMPS):
             show_beat_sign()
         elif any(0 <= (timestamp - SONG_POS) <= 550 for timestamp in ALL_USER_LEVEL_TIMESTAMPS):
             show_beat_sign(1)
@@ -383,6 +415,25 @@ while True:
             show_beat_sign(2)
         elif any(0 <= (timestamp - SONG_POS) <= 1550 for timestamp in ALL_USER_LEVEL_TIMESTAMPS):
             show_beat_sign(3)
+
+        if any(-300 <= (timestamp - SONG_POS) <= 20 for timestamp in RANDOMIZED_MODEL_TIMESTAMPS["left"]):
+            show_model_pose("left")
+        elif any(-300 <= (timestamp - SONG_POS) <= 20 for timestamp in RANDOMIZED_MODEL_TIMESTAMPS["right"]):
+            show_model_pose("right")
+        elif any(-300 <= (timestamp - SONG_POS) <= 20 for timestamp in RANDOMIZED_MODEL_TIMESTAMPS["neutral"]):
+            show_model_pose("neutral")
+        elif SONG_POS % 500 <= 50:
+            game_screen[game_screen_names.index("model_neutral")].hidden = True
+            hide_model_poses()
+            game_screen[game_screen_names.index("model_bob")].hidden = False
+        else:
+            game_screen[game_screen_names.index("model_bob")].hidden = True
+            hide_model_poses()
+            game_screen[game_screen_names.index("model_neutral")].hidden = False
+
+        if SONG_POS % 500 <= 50:
+            if not RATING_ON:
+                game_screen[game_screen_names.index("user_bob")].hidden = False
 
     elif SET_MENU_SCREEN:
         pygame.mixer.music.pause()
