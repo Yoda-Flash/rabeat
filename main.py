@@ -30,7 +30,7 @@ SONG_POS = 0
 SONG_BPM = 120
 SONG_POS_OFFSET = 0
 
-RANDOM_POSE_INDEX = 0
+RANDOM_POSE_INDEX = 1
 RANDOM_POSE_INDEX_TIMER = 0
 
 USER_LOCK = False
@@ -346,15 +346,21 @@ def show_model_pose(direction):
     else:
         game_screen[game_screen_names.index(f"model_{direction}{RANDOM_POSE_INDEX}")].hidden = False
 
-def hide_model_poses():
-    i = 1
-    while i <= 4:
-        game_screen[game_screen_names.index(f"model_left{i}")].hidden = True
-        game_screen[game_screen_names.index(f"model_right{i}")].hidden = True
-        i += 1
-
-    game_screen[game_screen_names.index("model_back")].hidden = True
-    game_screen[game_screen_names.index("model_duck")].hidden = True
+def hide_model_poses(direction=""):
+    # Hide all poses not in the specified direction
+    if direction != "left":
+        i = 1
+        while i <= 4:
+            game_screen[game_screen_names.index(f"model_left{i}")].hidden = True
+            i += 1
+    if direction != "neutral":
+        game_screen[game_screen_names.index("model_back")].hidden = True
+        game_screen[game_screen_names.index("model_duck")].hidden = True
+    if direction != "right":
+        i = 1
+        while i <= 4:
+            game_screen[game_screen_names.index(f"model_right{i}")].hidden = True
+            i += 1
 
 def show_user_pose(direction):
     global RANDOM_POSE_INDEX_TIMER, RANDOM_POSE_INDEX
@@ -500,10 +506,13 @@ while True:
             show_beat_sign(3)
 
         if any(-300 <= (timestamp - SONG_POS) <= 20 for timestamp in RANDOMIZED_MODEL_TIMESTAMPS["left"]):
+            hide_model_poses("left")
             show_model_pose("left")
         elif any(-300 <= (timestamp - SONG_POS) <= 20 for timestamp in RANDOMIZED_MODEL_TIMESTAMPS["right"]):
+            hide_model_poses("right")
             show_model_pose("right")
         elif any(-300 <= (timestamp - SONG_POS) <= 20 for timestamp in RANDOMIZED_MODEL_TIMESTAMPS["neutral"]):
+            hide_model_poses("neutral")
             show_model_pose("neutral")
         elif SONG_POS % 500 <= 50:
             game_screen[game_screen_names.index("model_neutral")].hidden = True
@@ -514,26 +523,34 @@ while True:
             hide_model_poses()
             game_screen[game_screen_names.index("model_neutral")].hidden = False
 
-        if SONG_POS % 500 <= 50:
-            game_screen[game_screen_names.index("user_neutral")].hidden = True
-            if not RATING_ON:
-                game_screen[game_screen_names.index("user_bob")].hidden = False
-        else:
-            game_screen[game_screen_names.index("user_neutral")].hidden = False
-            game_screen[game_screen_names.index("user_bob")].hidden = True
-
         if not RATING_ON and not USER_LOCK:
             if is_left_button_pressed():
                 rate_keypress("left")
+                show_user_pose("left")
             elif is_middle_button_pressed():
                 rate_keypress("neutral")
+                show_user_pose("neutral")
             elif is_right_button_pressed():
                 rate_keypress("right")
+                show_user_pose("right")
+
+        if not RATING_ON:
+            if SONG_POS % 500 <= 50:
+                game_screen[game_screen_names.index("user_neutral")].hidden = True
+                game_screen[game_screen_names.index("user_bob")].hidden = False
+            else:
+                game_screen[game_screen_names.index("user_neutral")].hidden = False
+                game_screen[game_screen_names.index("user_bob")].hidden = True
 
         if is_any_button_pressed():
             USER_LOCK = True
         else:
             USER_LOCK = False
+
+        if not pygame.mixer.music.get_busy():
+            SET_STAGE_COMPLETE_SCREEN = True
+            SET_GAME_SCREEN = False
+            time.sleep(0.2)
 
         time.sleep(0.005)
     elif SET_MENU_SCREEN:
