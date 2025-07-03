@@ -37,6 +37,7 @@ USER_LOCK = False
 RATING_ON = False
 RATING_ON_TIMER = 0
 ATTEMPTED = 0
+ATTEMPTED_THRESHOLD = 600
 
 # Score settings
 NUM_SONG_TIMESTAMPS = 0
@@ -266,6 +267,7 @@ def set_poses(level_difficulty):
     ALL_USER_LEVEL_TIMESTAMPS = []
     for timestamps in RANDOMIZED_USER_TIMESTAMPS.values():
         ALL_USER_LEVEL_TIMESTAMPS.extend(timestamps)
+    ALL_USER_LEVEL_TIMESTAMPS.sort()
 
 def distribute_randoms(level_difficulty):
     index = 0
@@ -416,9 +418,18 @@ def show_ratings(rating):
             game_screen[game_screen_names.index("great")].hidden = True
             game_screen[game_screen_names.index("perfect")].hidden = True
 
+def get_attempted_threshold(timestamp):
+    timestamp_index = ALL_USER_LEVEL_TIMESTAMPS.index(timestamp)
+    if timestamp_index > 0:
+        return (ALL_USER_LEVEL_TIMESTAMPS[timestamp_index] - ALL_USER_LEVEL_TIMESTAMPS[timestamp_index - 1])/2.5
+    else:
+        return (ALL_USER_LEVEL_TIMESTAMPS[timestamp_index + 1] - ALL_USER_LEVEL_TIMESTAMPS[timestamp_index])/2.5
+
 def not_attempted(timestamp):
-    print(timestamp - ATTEMPTED)
-    return timestamp - ATTEMPTED >= 600
+    global ATTEMPTED_THRESHOLD
+    ATTEMPTED_THRESHOLD = get_attempted_threshold(timestamp)
+    print(timestamp - ATTEMPTED >= ATTEMPTED_THRESHOLD)
+    return timestamp - ATTEMPTED >= ATTEMPTED_THRESHOLD
 
 def rate_keypress(direction):
     global SONG_POS, ATTEMPTED
@@ -461,6 +472,7 @@ def restart():
     game_screen[game_screen_names.index("model_bob")].hidden = True
 
     show_beat_sign()
+    show_ratings("none")
 
 while True:
     for event in pygame.event.get():
@@ -568,10 +580,10 @@ while True:
         else:
             USER_LOCK = False
 
-        if not pygame.mixer.music.get_busy():
-            SET_STAGE_COMPLETE_SCREEN = True
-            SET_GAME_SCREEN = False
-            time.sleep(0.2)
+        # if not pygame.mixer.music.get_busy():
+        #     SET_STAGE_COMPLETE_SCREEN = True
+        #     SET_GAME_SCREEN = False
+        #     time.sleep(0.2)
 
         time.sleep(0.005)
     elif SET_MENU_SCREEN:
