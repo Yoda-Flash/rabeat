@@ -233,6 +233,12 @@ qr_sprite = displayio.TileGrid(
 
 how_to_play_screen.append(qr_sprite)
 
+# End screen setup
+stage_complete_screen = displayio.Group()
+
+stage_complete_screen.append(backgrounds["stage_complete"])
+
+
 def is_left_button_pressed():
     return keys[pygame.K_LEFT] or keys[pygame.K_1]
 
@@ -346,6 +352,22 @@ def show_model_pose(direction):
         game_screen[game_screen_names.index(f"model_{direction}{RANDOM_POSE_INDEX}")].hidden = False
 
 def hide_model_poses(direction=""):
+    hide_model_poses_inside_direction(direction)
+    hide_model_poses_outside_direction(direction)
+def hide_model_poses_inside_direction(direction=""):
+    if direction == "neutral":
+        if RANDOM_POSE_INDEX % 2 == 0:
+            game_screen[game_screen_names.index("model_duck")].hidden = True
+        else:
+            game_screen[game_screen_names.index("model_back")].hidden = True
+    elif direction == "left" or direction == "right":
+        i = 1
+        while i <= 4:
+            if RANDOM_POSE_INDEX != i:
+                game_screen[game_screen_names.index(f"model_{direction}{i}")].hidden = True
+            i += 1
+
+def hide_model_poses_outside_direction(direction=""):
     # Hide all poses not in the specified direction
     if direction != "left":
         i = 1
@@ -428,7 +450,6 @@ def get_attempted_threshold(timestamp):
 def not_attempted(timestamp):
     global ATTEMPTED_THRESHOLD
     ATTEMPTED_THRESHOLD = get_attempted_threshold(timestamp)
-    print(timestamp - ATTEMPTED >= ATTEMPTED_THRESHOLD)
     return timestamp - ATTEMPTED >= ATTEMPTED_THRESHOLD
 
 def rate_keypress(direction):
