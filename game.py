@@ -597,7 +597,7 @@ stage_complete_bg_sprite = displayio.TileGrid(
 )
 
 endgame_options, endgame_options_palette = adafruit_imageload.load(
-    "art/endgame/options.bmp",
+    "art/stage_complete/options.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -608,7 +608,7 @@ endgame_options_sprite = displayio.TileGrid(
 )
 
 endgame_quit, endgame_quit_palette = adafruit_imageload.load(
-    "art/endgame/quit.bmp",
+    "art/stage_complete/quit.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -619,7 +619,7 @@ endgame_quit_sprite = displayio.TileGrid(
 )
 
 endgame_restart, endgame_restart_palette = adafruit_imageload.load(
-    "art/endgame/restart.bmp",
+    "art/stage_complete/restart.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -632,7 +632,7 @@ endgame_restart_sprite = displayio.TileGrid(
 end_game_score_sprites = []
 
 end_game_score0, end_game_score0_palette = adafruit_imageload.load(
-    "./art/end_game_scores/0.bmp",
+    "art/stage_complete/scores/0.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -644,7 +644,7 @@ end_game_score0_sprite = displayio.TileGrid(
 end_game_score_sprites.append(end_game_score0_sprite)
 
 end_game_score1, end_game_score1_palette = adafruit_imageload.load(
-    "./art/end_game_scores/1.bmp",
+    "art/stage_complete/scores/1.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -656,7 +656,7 @@ end_game_score1_sprite = displayio.TileGrid(
 end_game_score_sprites.append(end_game_score1_sprite)
 
 end_game_score2, end_game_score2_palette = adafruit_imageload.load(
-    "./art/end_game_scores/2.bmp",
+    "art/stage_complete/scores/2.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -668,7 +668,7 @@ end_game_score2_sprite = displayio.TileGrid(
 end_game_score_sprites.append(end_game_score2_sprite)
 
 end_game_score3, end_game_score3_palette = adafruit_imageload.load(
-    "./art/end_game_scores/3.bmp",
+    "art/stage_complete/scores/3.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -680,7 +680,7 @@ end_game_score3_sprite = displayio.TileGrid(
 end_game_score_sprites.append(end_game_score3_sprite)
 
 end_game_score4, end_game_score4_palette = adafruit_imageload.load(
-    "./art/end_game_scores/4.bmp",
+    "art/stage_complete/scores/4.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -692,7 +692,7 @@ end_game_score4_sprite = displayio.TileGrid(
 end_game_score_sprites.append(end_game_score4_sprite)
 
 end_game_score5, end_game_score5_palette = adafruit_imageload.load(
-    "./art/end_game_scores/5.bmp",
+    "art/stage_complete/scores/5.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -704,7 +704,7 @@ end_game_score5_sprite = displayio.TileGrid(
 end_game_score_sprites.append(end_game_score5_sprite)
 
 end_game_score6, end_game_score6_palette = adafruit_imageload.load(
-    "./art/end_game_scores/6.bmp",
+    "art/stage_complete/scores/6.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -716,7 +716,7 @@ end_game_score6_sprite = displayio.TileGrid(
 end_game_score_sprites.append(end_game_score6_sprite)
 
 end_game_score7, end_game_score7_palette = adafruit_imageload.load(
-    "./art/end_game_scores/7.bmp",
+    "art/stage_complete/scores/7.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -728,7 +728,7 @@ end_game_score7_sprite = displayio.TileGrid(
 end_game_score_sprites.append(end_game_score7_sprite)
 
 end_game_score8, end_game_score8_palette = adafruit_imageload.load(
-    "./art/end_game_scores/8.bmp",
+    "art/stage_complete/scores/8.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -740,7 +740,7 @@ end_game_score8_sprite = displayio.TileGrid(
 end_game_score_sprites.append(end_game_score8_sprite)
 
 end_game_score9, end_game_score9_palette = adafruit_imageload.load(
-    "./art/end_game_scores/9.bmp",
+    "art/stage_complete/scores/9.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -752,7 +752,7 @@ end_game_score9_sprite = displayio.TileGrid(
 end_game_score_sprites.append(end_game_score9_sprite)
 
 end_game_score10, end_game_score10_palette = adafruit_imageload.load(
-    "./art/end_game_scores/10.bmp",
+    "art/stage_complete/scores/10.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -764,7 +764,7 @@ end_game_score10_sprite = displayio.TileGrid(
 end_game_score_sprites.append(end_game_score10_sprite)
 
 end_game_score11, end_game_score11_palette = adafruit_imageload.load(
-    "./art/end_game_scores/11.bmp",
+    "art/stage_complete/scores/11.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -776,7 +776,7 @@ end_game_score11_sprite = displayio.TileGrid(
 end_game_score_sprites.append(end_game_score11_sprite)
 
 end_game_score12, end_game_score12_palette = adafruit_imageload.load(
-    "./art/end_game_scores/12.bmp",
+    "art/stage_complete/scores/12.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -788,7 +788,7 @@ end_game_score12_sprite = displayio.TileGrid(
 end_game_score_sprites.append(end_game_score12_sprite)
 
 perfect_stage, perfect_stage_palette = adafruit_imageload.load(
-    "./art/perfect_stage.bmp",
+    "art/stage_complete/perfect_stage.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -800,7 +800,7 @@ perfect_stage_sprite = displayio.TileGrid(
 
 confetti = []
 confetti1, confetti1_palette = adafruit_imageload.load(
-    "./art/confetti/1.bmp",
+    "art/stage_complete/confetti/1.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -812,7 +812,7 @@ confetti1_sprite = displayio.TileGrid(
 confetti.append(confetti1_sprite)
 
 confetti2, confetti2_palette = adafruit_imageload.load(
-    "./art/confetti/2.bmp",
+    "art/stage_complete/confetti/2.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -824,7 +824,7 @@ confetti2_sprite = displayio.TileGrid(
 confetti.append(confetti2_sprite)
 
 confetti3, confetti3_palette = adafruit_imageload.load(
-    "./art/confetti/3.bmp",
+    "art/stage_complete/confetti/3.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -836,7 +836,7 @@ confetti3_sprite = displayio.TileGrid(
 confetti.append(confetti3_sprite)
 
 confetti4, confetti4_palette = adafruit_imageload.load(
-    "./art/confetti/4.bmp",
+    "art/stage_complete/confetti/4.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )

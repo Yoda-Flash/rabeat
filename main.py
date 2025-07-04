@@ -203,8 +203,7 @@ create_sprites_for_directory("./art/menu")
 
 # Move "options" to the start of the sprites["menu"] so the layer will be first
 unordered_menu = sprites["menu"]
-ordered_menu = {}
-ordered_menu["options"] = unordered_menu["options"]
+ordered_menu = {"options": unordered_menu["options"]}
 unordered_menu.pop("options")
 sprites["menu"] = ordered_menu | unordered_menu
 
@@ -235,9 +234,33 @@ how_to_play_screen.append(qr_sprite)
 
 # End screen setup
 stage_complete_screen = displayio.Group()
+stage_complete_screen_names = []
+stage_complete_options = ["restart", "quit"]
 
 stage_complete_screen.append(backgrounds["stage_complete"])
+stage_complete_screen_names.append("stage_complete")
 
+create_sprites_for_directory("./art/stage_complete")
+
+# Move "options" to the start of the sprites["stage_complete"] so the layer will be first
+unordered_stage_complete = sprites["stage_complete"]
+ordered_stage_complete = {"options": unordered_stage_complete["options"]}
+unordered_stage_complete.pop("options")
+sprites["stage_complete"] = ordered_stage_complete | unordered_stage_complete
+
+for sprite in sprites["stage_complete"]:
+    if type(sprites["stage_complete"][sprite]) == dict:
+        for subsprite in sprites["stage_complete"][sprite]:
+            stage_complete_screen.append(sprites["stage_complete"][sprite][subsprite])
+            stage_complete_screen_names.append(subsprite)
+            stage_complete_screen[-1].hidden = True
+    else:
+        stage_complete_screen.append(sprites["stage_complete"][sprite])
+        stage_complete_screen_names.append(sprite)
+        stage_complete_screen[-1].hidden = True
+
+stage_complete_screen[stage_complete_screen_names.index("options")].hidden = False
+stage_complete_screen[stage_complete_screen_names.index("rabbit")].hidden = False
 
 def is_left_button_pressed():
     return keys[pygame.K_LEFT] or keys[pygame.K_1]
@@ -601,14 +624,16 @@ while True:
         else:
             USER_LOCK = False
 
-        # if not pygame.mixer.music.get_busy():
-        #     SET_STAGE_COMPLETE_SCREEN = True
-        #     SET_GAME_SCREEN = False
-        #     time.sleep(0.2)
+        if not pygame.mixer.music.get_busy():
+            SET_STAGE_COMPLETE_SCREEN = True
+            SET_GAME_SCREEN = False
+            time.sleep(0.2)
 
         time.sleep(0.005)
     elif SET_MENU_SCREEN:
         pygame.mixer.music.pause()
+        show_ratings("none")
+
         display.show(menu_screen)
         time.sleep(0.05)
         if keys[pygame.K_SPACE] or is_middle_button_pressed():
@@ -637,3 +662,5 @@ while True:
                 SET_MENU_SCREEN = True
                 SET_HOW_TO_PLAY_SCREEN = False
                 time.sleep(0.2)
+    elif SET_STAGE_COMPLETE_SCREEN:
+        display.show(stage_complete_screen)
