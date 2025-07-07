@@ -800,7 +800,7 @@ perfect_stage_sprite = displayio.TileGrid(
 
 confetti = []
 confetti1, confetti1_palette = adafruit_imageload.load(
-    "art/stage_complete/confetti/1.bmp",
+    "art/stage_complete/confetti/confetti_1.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -812,7 +812,7 @@ confetti1_sprite = displayio.TileGrid(
 confetti.append(confetti1_sprite)
 
 confetti2, confetti2_palette = adafruit_imageload.load(
-    "art/stage_complete/confetti/2.bmp",
+    "art/stage_complete/confetti/confetti_2.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -824,7 +824,7 @@ confetti2_sprite = displayio.TileGrid(
 confetti.append(confetti2_sprite)
 
 confetti3, confetti3_palette = adafruit_imageload.load(
-    "art/stage_complete/confetti/3.bmp",
+    "art/stage_complete/confetti/confetti_3.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )
@@ -836,7 +836,7 @@ confetti3_sprite = displayio.TileGrid(
 confetti.append(confetti3_sprite)
 
 confetti4, confetti4_palette = adafruit_imageload.load(
-    "art/stage_complete/confetti/4.bmp",
+    "art/stage_complete/confetti/confetti_4.bmp",
     bitmap=displayio.Bitmap,
     palette=displayio.Palette
 )

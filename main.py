@@ -1,3 +1,4 @@
+import math
 import os
 import time
 from random import randint
@@ -44,7 +45,7 @@ NUM_SONG_TIMESTAMPS = 0
 CURRENT_SCORE = 0
 PERCENTAGE_SCORE = 0
 
-CONFETTI_TIMER = 0
+CONFETTI_TIMER = 1
 
 SET_MODEL_TIMESTAMPS = {
     "easy": {
@@ -261,6 +262,7 @@ for sprite in sprites["stage_complete"]:
 
 stage_complete_screen[stage_complete_screen_names.index("options")].hidden = False
 stage_complete_screen[stage_complete_screen_names.index("rabbit")].hidden = False
+stage_complete_screen[stage_complete_screen_names.index("restart")].hidden = False
 
 def is_left_button_pressed():
     return keys[pygame.K_LEFT] or keys[pygame.K_1]
@@ -337,7 +339,11 @@ def change_menu_option(option):
 
 
 def change_endgame_option(option):
-    pass
+    stage_complete_screen[stage_complete_screen_names.index(option)].hidden = True
+    option = next_option(option, stage_complete_options)
+    stage_complete_screen[stage_complete_screen_names.index(option)].hidden = False
+    time.sleep(0.15)
+    return option
 
 def next_beat(beat):
     if beat == 3:
@@ -505,6 +511,25 @@ def change_score(rating):
         case "good":
             PERCENTAGE_SCORE += (0.25/NUM_SONG_TIMESTAMPS)
 
+def next_confetti(confetti):
+    if confetti == 4:
+        return 1
+    else:
+        return confetti + 1
+
+def move_confetti():
+    global CONFETTI_TIMER
+    if CONFETTI_TIMER > 4:
+        CONFETTI_TIMER = 1
+    stage_complete_screen[stage_complete_screen_names.index(f"confetti_{math.floor(CONFETTI_TIMER)}")].hidden = False
+    confetti = next_confetti(math.floor(CONFETTI_TIMER))
+    stage_complete_screen[stage_complete_screen_names.index(f"confetti_{confetti}")].hidden = True
+    confetti = next_confetti(confetti)
+    stage_complete_screen[stage_complete_screen_names.index(f"confetti_{confetti}")].hidden = True
+    confetti = next_confetti(confetti)
+    stage_complete_screen[stage_complete_screen_names.index(f"confetti_{confetti}")].hidden = True
+    CONFETTI_TIMER += 0.25
+
 def restart():
     global MUSIC_LOADED, RATING_ON
     MUSIC_LOADED = False
@@ -517,6 +542,9 @@ def restart():
 
     show_beat_sign()
     show_ratings("none")
+
+    CURRENT_SCORE = 0
+    PERCENTAGE_SCORE = 0
 
 while True:
     for event in pygame.event.get():
@@ -549,6 +577,7 @@ while True:
         display.show(game_screen)
 
         if is_two_buttons_pressed():
+            MENU_OPTION = "back_to_game"
             SET_MENU_SCREEN = True
             SET_GAME_SCREEN = False
             time.sleep(0.2)
@@ -659,8 +688,26 @@ while True:
         display.show(how_to_play_screen)
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN or is_any_button_pressed():
+                MENU_OPTION = "back_to_game"
                 SET_MENU_SCREEN = True
                 SET_HOW_TO_PLAY_SCREEN = False
                 time.sleep(0.2)
     elif SET_STAGE_COMPLETE_SCREEN:
         display.show(stage_complete_screen)
+        time.sleep(0.05)
+        stage_complete_screen[stage_complete_screen_names.index(f"{CURRENT_SCORE}")].hidden = False
+        if CURRENT_SCORE == 12:
+            stage_complete_screen[stage_complete_screen_names.index("perfect_stage")].hidden = False
+            move_confetti()
+        if keys[pygame.K_SPACE] or is_middle_button_pressed():
+            ENDGAME_OPTION = change_endgame_option(ENDGAME_OPTION)
+        if keys[pygame.K_RETURN] or is_right_button_pressed():
+            if ENDGAME_OPTION == "restart":
+                SET_GAME_SCREEN = True
+                restart()
+            elif ENDGAME_OPTION == "quit":
+                SET_HOME_SCREEN = True
+                restart()
+            SET_STAGE_COMPLETE_SCREEN = False
+            MUSIC_LOADED = False
+            time.sleep(0.2)
