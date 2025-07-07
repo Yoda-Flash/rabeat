@@ -172,7 +172,7 @@ difficulty_screen[difficulty_screen_names.index("hard")].hidden = True
 # Game screen setup
 game_screen = displayio.Group()
 game_screen_names = []
-rating_options = ["miss", "good", "great", "perfect"]
+ratings = ["miss", "good", "great", "perfect"]
 
 game_screen.append(backgrounds["background"])
 game_screen_names.append("background")
@@ -192,6 +192,7 @@ for sprite in sprites["game"]:
 game_screen[game_screen_names.index("scoreboard")].hidden = False
 game_screen[game_screen_names.index("user_neutral")].hidden = False
 game_screen[game_screen_names.index("model_neutral")].hidden = False
+game_screen[game_screen_names.index("0")].hidden = False
 
 # Menu screen setup
 menu_screen = displayio.Group()
@@ -346,12 +347,6 @@ def change_endgame_option(option):
     time.sleep(0.15)
     return option
 
-def next_beat(beat):
-    if beat == 3:
-        return 1
-    else:
-        return beat + 1
-
 def show_beat_sign(beat=0):
     if beat == 0:
         game_screen[game_screen_names.index("beat_1")].hidden = True
@@ -359,10 +354,11 @@ def show_beat_sign(beat=0):
         game_screen[game_screen_names.index("beat_3")].hidden = True
     else:
         game_screen[game_screen_names.index(f"beat_{beat}")].hidden = False
-        beat = next_beat(beat)
-        game_screen[game_screen_names.index(f"beat_{beat}")].hidden = True
-        beat = next_beat(beat)
-        game_screen[game_screen_names.index(f"beat_{beat}")].hidden = True
+        i = 1
+        while i <= 3:
+            if i != beat:
+                game_screen[game_screen_names.index(f"beat_{i}")].hidden = True
+            i += 1
 
 def show_model_pose(direction):
     global RANDOM_POSE_INDEX_TIMER, RANDOM_POSE_INDEX
@@ -447,7 +443,7 @@ def show_ratings(rating):
     else:
         game_screen[game_screen_names.index(rating)].hidden = False
 
-        for rating_option in rating_options:
+        for rating_option in ratings:
             if rating_option != rating:
                 game_screen[game_screen_names.index(rating_option)].hidden = True
 
@@ -481,10 +477,20 @@ def rate_keypress(direction):
 
 
 def show_score(score):
-    game_screen[game_screen_names.index(score)].hidden = False
+    game_screen[game_screen_names.index(f"{score}")].hidden = False
+    i = 0
+    while i <= 12:
+        if i != score:
+            game_screen[game_screen_names.index(f"{i}")].hidden = True
+        i += 1
+
 
 def change_score(rating):
-    global CURRENT_SCORE, PERCENTAGE_SCORE
+    change_percentage_score(rating)
+    change_current_score()
+
+def change_percentage_score(rating):
+    global PERCENTAGE_SCORE
     match rating:
         case "perfect":
             PERCENTAGE_SCORE += (1/NUM_SONG_TIMESTAMPS)
@@ -493,27 +499,52 @@ def change_score(rating):
         case "good":
             PERCENTAGE_SCORE += (0.25/NUM_SONG_TIMESTAMPS)
 
-def next_confetti(confetti):
-    if confetti == 4:
-        return 1
+def change_current_score():
+    global CURRENT_SCORE, PERCENTAGE_SCORE
+
+    if PERCENTAGE_SCORE >= 0.999:
+        CURRENT_SCORE = 12
+    elif PERCENTAGE_SCORE >= 0.98:
+        CURRENT_SCORE = 11
+    elif PERCENTAGE_SCORE >= 0.95:
+        CURRENT_SCORE = 10
+    elif PERCENTAGE_SCORE >= 0.90:
+        CURRENT_SCORE = 9
+    elif PERCENTAGE_SCORE >= 0.75:
+        CURRENT_SCORE = 8
+    elif PERCENTAGE_SCORE >= 0.5:
+        CURRENT_SCORE = 7
+    elif PERCENTAGE_SCORE >= 0.25:
+        CURRENT_SCORE = 6
+    elif PERCENTAGE_SCORE >= 0.20:
+        CURRENT_SCORE = 5
+    elif PERCENTAGE_SCORE >= 0.15:
+        CURRENT_SCORE = 4
+    elif PERCENTAGE_SCORE >= 0.10:
+        CURRENT_SCORE = 3
+    elif PERCENTAGE_SCORE >= 0.05:
+        CURRENT_SCORE = 2
+    elif PERCENTAGE_SCORE >= 0.01:
+        CURRENT_SCORE = 1
     else:
-        return confetti + 1
+        CURRENT_SCORE = 0
+
+    show_score(CURRENT_SCORE)
 
 def move_confetti():
     global CONFETTI_TIMER
     if CONFETTI_TIMER > 4:
         CONFETTI_TIMER = 1
     stage_complete_screen[stage_complete_screen_names.index(f"confetti_{math.floor(CONFETTI_TIMER)}")].hidden = False
-    confetti = next_confetti(math.floor(CONFETTI_TIMER))
-    stage_complete_screen[stage_complete_screen_names.index(f"confetti_{confetti}")].hidden = True
-    confetti = next_confetti(confetti)
-    stage_complete_screen[stage_complete_screen_names.index(f"confetti_{confetti}")].hidden = True
-    confetti = next_confetti(confetti)
-    stage_complete_screen[stage_complete_screen_names.index(f"confetti_{confetti}")].hidden = True
+    i = 1
+    while i <= 4:
+        if i != math.floor(CONFETTI_TIMER):
+            stage_complete_screen[stage_complete_screen_names.index(f"confetti_{i}")].hidden = True
+        i += 1
     CONFETTI_TIMER += 0.25
 
 def restart():
-    global MUSIC_LOADED, RATING_ON
+    global MUSIC_LOADED, RATING_ON, CURRENT_SCORE, PERCENTAGE_SCORE, USER_LOCK, ATTEMPTED
     MUSIC_LOADED = False
     RATING_ON = False
 
@@ -527,7 +558,12 @@ def restart():
 
     CURRENT_SCORE = 0
     PERCENTAGE_SCORE = 0
+    show_score(0)
 
+    USER_LOCK = False
+    ATTEMPTED = False
+
+restart()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -643,6 +679,7 @@ while True:
     elif SET_MENU_SCREEN:
         pygame.mixer.music.pause()
         show_ratings("none")
+        ATTEMPTED = False
 
         display.show(menu_screen)
         time.sleep(0.05)
