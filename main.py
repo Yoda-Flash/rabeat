@@ -446,42 +446,10 @@ def show_ratings(rating):
         game_screen[game_screen_names.index("perfect")].hidden = True
     else:
         game_screen[game_screen_names.index(rating)].hidden = False
-        next_rating = next_option(rating, rating_options)
-        game_screen[game_screen_names.index(next_rating)].hidden = True
-        next_rating = next_option(rating, rating_options)
-        game_screen[game_screen_names.index(next_rating)].hidden = True
-        next_rating = next_option(rating, rating_options)
-        game_screen[game_screen_names.index(next_rating)].hidden = True
-    # match rating:
-    #     case "miss":
-    #         game_screen[game_screen_names.index("miss")].hidden = False
-    #
-    #         game_screen[game_screen_names.index("good")].hidden = True
-    #         game_screen[game_screen_names.index("great")].hidden = True
-    #         game_screen[game_screen_names.index("perfect")].hidden = True
-    #     case "good":
-    #         game_screen[game_screen_names.index("good")].hidden = False
-    #
-    #         game_screen[game_screen_names.index("miss")].hidden = True
-    #         game_screen[game_screen_names.index("great")].hidden = True
-    #         game_screen[game_screen_names.index("perfect")].hidden = True
-    #     case "great":
-    #         game_screen[game_screen_names.index("great")].hidden = False
-    #
-    #         game_screen[game_screen_names.index("miss")].hidden = True
-    #         game_screen[game_screen_names.index("good")].hidden = True
-    #         game_screen[game_screen_names.index("perfect")].hidden = True
-    #     case "perfect":
-    #         game_screen[game_screen_names.index("perfect")].hidden = False
-    #
-    #         game_screen[game_screen_names.index("miss")].hidden = True
-    #         game_screen[game_screen_names.index("good")].hidden = True
-    #         game_screen[game_screen_names.index("great")].hidden = True
-    #     case "none":
-    #         game_screen[game_screen_names.index("miss")].hidden = True
-    #         game_screen[game_screen_names.index("good")].hidden = True
-    #         game_screen[game_screen_names.index("great")].hidden = True
-    #         game_screen[game_screen_names.index("perfect")].hidden = True
+
+        for rating_option in rating_options:
+            if rating_option != rating:
+                game_screen[game_screen_names.index(rating_option)].hidden = True
 
 def get_attempted_threshold(timestamp):
     timestamp_index = ALL_USER_LEVEL_TIMESTAMPS.index(timestamp)
