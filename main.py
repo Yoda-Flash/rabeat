@@ -172,6 +172,7 @@ difficulty_screen[difficulty_screen_names.index("hard")].hidden = True
 # Game screen setup
 game_screen = displayio.Group()
 game_screen_names = []
+rating_options = ["miss", "good", "great", "perfect"]
 
 game_screen.append(backgrounds["background"])
 game_screen_names.append("background")
@@ -438,36 +439,49 @@ def hide_user_pose():
 def show_ratings(rating):
     global RATING_ON
     RATING_ON = True
-    match rating:
-        case "miss":
-            game_screen[game_screen_names.index("miss")].hidden = False
-
-            game_screen[game_screen_names.index("good")].hidden = True
-            game_screen[game_screen_names.index("great")].hidden = True
-            game_screen[game_screen_names.index("perfect")].hidden = True
-        case "good":
-            game_screen[game_screen_names.index("good")].hidden = False
-
-            game_screen[game_screen_names.index("miss")].hidden = True
-            game_screen[game_screen_names.index("great")].hidden = True
-            game_screen[game_screen_names.index("perfect")].hidden = True
-        case "great":
-            game_screen[game_screen_names.index("great")].hidden = False
-
-            game_screen[game_screen_names.index("miss")].hidden = True
-            game_screen[game_screen_names.index("good")].hidden = True
-            game_screen[game_screen_names.index("perfect")].hidden = True
-        case "perfect":
-            game_screen[game_screen_names.index("perfect")].hidden = False
-
-            game_screen[game_screen_names.index("miss")].hidden = True
-            game_screen[game_screen_names.index("good")].hidden = True
-            game_screen[game_screen_names.index("great")].hidden = True
-        case "none":
-            game_screen[game_screen_names.index("miss")].hidden = True
-            game_screen[game_screen_names.index("good")].hidden = True
-            game_screen[game_screen_names.index("great")].hidden = True
-            game_screen[game_screen_names.index("perfect")].hidden = True
+    if rating == "none":
+        game_screen[game_screen_names.index("miss")].hidden = True
+        game_screen[game_screen_names.index("good")].hidden = True
+        game_screen[game_screen_names.index("great")].hidden = True
+        game_screen[game_screen_names.index("perfect")].hidden = True
+    else:
+        game_screen[game_screen_names.index(rating)].hidden = False
+        next_rating = next_option(rating, rating_options)
+        game_screen[game_screen_names.index(next_rating)].hidden = True
+        next_rating = next_option(rating, rating_options)
+        game_screen[game_screen_names.index(next_rating)].hidden = True
+        next_rating = next_option(rating, rating_options)
+        game_screen[game_screen_names.index(next_rating)].hidden = True
+    # match rating:
+    #     case "miss":
+    #         game_screen[game_screen_names.index("miss")].hidden = False
+    #
+    #         game_screen[game_screen_names.index("good")].hidden = True
+    #         game_screen[game_screen_names.index("great")].hidden = True
+    #         game_screen[game_screen_names.index("perfect")].hidden = True
+    #     case "good":
+    #         game_screen[game_screen_names.index("good")].hidden = False
+    #
+    #         game_screen[game_screen_names.index("miss")].hidden = True
+    #         game_screen[game_screen_names.index("great")].hidden = True
+    #         game_screen[game_screen_names.index("perfect")].hidden = True
+    #     case "great":
+    #         game_screen[game_screen_names.index("great")].hidden = False
+    #
+    #         game_screen[game_screen_names.index("miss")].hidden = True
+    #         game_screen[game_screen_names.index("good")].hidden = True
+    #         game_screen[game_screen_names.index("perfect")].hidden = True
+    #     case "perfect":
+    #         game_screen[game_screen_names.index("perfect")].hidden = False
+    #
+    #         game_screen[game_screen_names.index("miss")].hidden = True
+    #         game_screen[game_screen_names.index("good")].hidden = True
+    #         game_screen[game_screen_names.index("great")].hidden = True
+    #     case "none":
+    #         game_screen[game_screen_names.index("miss")].hidden = True
+    #         game_screen[game_screen_names.index("good")].hidden = True
+    #         game_screen[game_screen_names.index("great")].hidden = True
+    #         game_screen[game_screen_names.index("perfect")].hidden = True
 
 def get_attempted_threshold(timestamp):
     timestamp_index = ALL_USER_LEVEL_TIMESTAMPS.index(timestamp)
@@ -577,7 +591,6 @@ while True:
         display.show(game_screen)
 
         if is_two_buttons_pressed():
-            MENU_OPTION = "back_to_game"
             SET_MENU_SCREEN = True
             SET_GAME_SCREEN = False
             time.sleep(0.2)
@@ -688,7 +701,6 @@ while True:
         display.show(how_to_play_screen)
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN or is_any_button_pressed():
-                MENU_OPTION = "back_to_game"
                 SET_MENU_SCREEN = True
                 SET_HOW_TO_PLAY_SCREEN = False
                 time.sleep(0.2)
