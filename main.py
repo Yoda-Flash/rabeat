@@ -499,6 +499,33 @@ def change_percentage_score(rating):
         case "good":
             PERCENTAGE_SCORE += (0.25/NUM_SONG_TIMESTAMPS)
 
+# Easy - 14 timestamps
+# - Perfect: 0.07142857
+#
+#
+#
+#
+# Normal - 20 timestamps
+# - Perfect: 0.05
+#
+#
+#
+# Hard - 22 timestamps
+# - Perfect: 0.045454545
+# - Great: 0.0340909
+#
+# 1 miss = 2 goods = 4 greats
+# Rule: 1 perfect max increases one point, can stay in the same place for the high scores
+# 12 - All perfects
+# 11 - 1 Great, rest 
+# 10 - 1 Good rest perfects / 2 great rest perfects
+# 9 - 1 miss rest perfects
+
+#
+# 3 - 3 perfects
+# 2 - 2 perfects
+# 1 - 1 perfect/ 1 great/ 1 good
+
 def change_current_score():
     global CURRENT_SCORE, PERCENTAGE_SCORE
 
@@ -508,21 +535,21 @@ def change_current_score():
         CURRENT_SCORE = 11
     elif PERCENTAGE_SCORE >= 0.95:
         CURRENT_SCORE = 10
-    elif PERCENTAGE_SCORE >= 0.90:
+    elif PERCENTAGE_SCORE >= 0.92:
         CURRENT_SCORE = 9
-    elif PERCENTAGE_SCORE >= 0.75:
+    elif PERCENTAGE_SCORE >= 0.8:
         CURRENT_SCORE = 8
-    elif PERCENTAGE_SCORE >= 0.5:
+    elif PERCENTAGE_SCORE >= 0.65:
         CURRENT_SCORE = 7
-    elif PERCENTAGE_SCORE >= 0.25:
+    elif PERCENTAGE_SCORE >= 0.50:
         CURRENT_SCORE = 6
-    elif PERCENTAGE_SCORE >= 0.20:
+    elif PERCENTAGE_SCORE >= 0.35:
         CURRENT_SCORE = 5
-    elif PERCENTAGE_SCORE >= 0.15:
+    elif PERCENTAGE_SCORE >= 0.20:
         CURRENT_SCORE = 4
-    elif PERCENTAGE_SCORE >= 0.10:
+    elif PERCENTAGE_SCORE >= 0.15:
         CURRENT_SCORE = 3
-    elif PERCENTAGE_SCORE >= 0.05:
+    elif PERCENTAGE_SCORE >= 0.10:
         CURRENT_SCORE = 2
     elif PERCENTAGE_SCORE >= 0.01:
         CURRENT_SCORE = 1

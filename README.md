@@ -12,6 +12,6 @@ Run ```source venv/bin/activate``` to activate the virtual environment.
 
 Run ```pip3 install -r requirements.txt``` to install the game requirements.
 
-Finally, run ```python code/main.py``` to play the game!
+Finally, run ```python main.py``` to play the game!
 
 For detailed instructions on how to play the game, read this [page](./how_to_play.md).
