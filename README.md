@@ -5,6 +5,8 @@ Rabeat's goal is to be a collection of rabbit-themed rhythm games, to be played 
 Music has always been a big part of my life, and rhythm games are my favorite games, so I decided to make a rhythm game. 
 I was also inspired by Super Mario Party's Sound Stage.
 
+Download on itch.io: https://yoda-flash.itch.io/rabeat
+
 ## Setup
 Run ```git clone https://github.com/Yoda-Flash/rabeat.git```
 Enter the game directory, and then run ```python -m venv venv``` to create a virtual environment.
